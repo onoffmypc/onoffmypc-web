@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup Guide — OnOffMyPC</title>
+  <meta name="description" content="Step-by-step guide to setting up your OnOffMyPC ESP32 device." />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">OnOffMyPC</a>
+    <div class="nav-links">
+      <a href="/about.html">About</a>
+      <a href="/setup.html">Setup</a>
+      <a href="https://app.onoffmypc.com/register" class="btn-primary">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <h1>Setup Guide</h1>
+  </div>
+
+  <div class="setup-steps">
+    <div class="notice">
+      <strong>Early access:</strong> Full firmware documentation and a flashing tool are coming
+      soon. These steps outline the setup flow — some parts are still being finalised.
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Create an account</h3>
+        <p>
+          Register at <a href="https://app.onoffmypc.com/register">app.onoffmypc.com/register</a>
+          with your email address and a password.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Register your device</h3>
+        <p>
+          In the app, add a new device and give it a name. You'll receive a unique device token —
+          keep this safe, it's how your ESP32 authenticates to the service.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Flash the ESP32</h3>
+        <p>
+          Flash the OnOffMyPC firmware onto your ESP32. During setup, enter your Wi-Fi credentials
+          and your device token. The device will connect to the service automatically on boot.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Wire to your PC</h3>
+        <p>
+          Connect the ESP32 output pin to your PC's power switch header on the motherboard. Enable
+          Wake-on-LAN in your BIOS/UEFI settings and your network adapter power management options.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>You're done</h3>
+        <p>
+          Open the app, check that your device shows as online, and try sending a power command.
+          Telemetry (power state, temperature, humidity) will appear in the dashboard within seconds.
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 OnOffMyPC</span>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/setup.html">Setup Guide</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — OnOffMyPC</title>
+  <meta name="description" content="Learn about OnOffMyPC — a remote PC power control solution built on ESP32 and Cloudflare." />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">OnOffMyPC</a>
+    <div class="nav-links">
+      <a href="/about.html">About</a>
+      <a href="/setup.html">Setup</a>
+      <a href="https://app.onoffmypc.com/register" class="btn-primary">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <h1>About OnOffMyPC</h1>
+  </div>
+
+  <div class="about-body">
+    <p>
+      OnOffMyPC lets you power your desktop PC on or off from anywhere in the world using a small
+      ESP32 microcontroller and a simple web or mobile app. No VPN, no port forwarding, no
+      subscription required during early access.
+    </p>
+    <p>
+      The ESP32 sits near your PC and connects to the internet over Wi-Fi. It maintains a persistent
+      WebSocket connection to our Cloudflare Workers backend, so commands reach your device in
+      near-real-time no matter where you are.
+    </p>
+    <p>
+      Power-on is handled via Wake-on-LAN. The ESP32 monitors whether the PC is running and reports
+      status, room temperature, and humidity back to the app every few seconds.
+    </p>
+    <p>
+      The project is in early access. Features are still being built and things may change. Feedback
+      is very welcome.
+    </p>
+    <p>
+      For setup instructions, see the <a href="/setup.html">Setup Guide</a>.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 OnOffMyPC</span>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/setup.html">Setup Guide</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
