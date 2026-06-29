@@ -35,6 +35,7 @@ const api = {
   register:     (email, password) => apiReq('POST', '/auth/register',   { email, password }),
   devices:      ()                => apiReq('GET',  '/devices'),
   addDevice:    (name)            => apiReq('POST', '/devices',          { name }),
+  renameDevice: (id, name)        => apiReq('PATCH',  `/devices/${id}`, { name }),
   deleteDevice: (id)              => apiReq('DELETE', `/devices/${id}`),
   sendCommand:  (deviceId, type)  => apiReq('POST', `/commands/${deviceId}`, { type }),
   commands:     (deviceId)        => apiReq('GET',  `/commands/${deviceId}`),

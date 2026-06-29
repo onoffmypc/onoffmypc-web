@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-29
+
+### Added
+- Device rename: click Rename on any device card to edit the name inline
+- Setup guide modal: after adding a device, "Setup guide →" walks through wiring, config.h, and flashing steps
+- Dashboard status auto-refresh every 30 seconds (device badges update without page reload)
+
 ## [0.1.0] - 2026-06-29
 
 ### Added

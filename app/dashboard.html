@@ -43,10 +43,41 @@
     </div>
 
     <div id="token-reveal" style="display:none">
-      <p class="token-hint">Copy this token and paste it into your ESP32 firmware config. You won't see it again.</p>
+      <p class="token-hint">Copy this token — you'll paste it into your ESP32 firmware. You won't see it again.</p>
       <div class="token-box" id="device-token"></div>
       <div class="modal-actions">
         <button class="btn btn-ghost" id="copy-btn">Copy token</button>
+        <button class="btn btn-primary" id="show-setup-btn">Setup guide →</button>
+      </div>
+    </div>
+
+    <div id="setup-guide" style="display:none">
+      <h3>Flash your ESP32</h3>
+      <ol class="setup-steps">
+        <li>
+          <strong>Download the firmware</strong><br>
+          Clone or download <a href="https://github.com/onoffmypc/onoffmypc-firmware-release" target="_blank" rel="noopener">onoffmypc-firmware-release</a> and open it in VS Code with the PlatformIO extension.
+        </li>
+        <li>
+          <strong>Create <code>src/config.h</code></strong><br>
+          Copy <code>src/config.example.h</code> to <code>src/config.h</code> and fill in your values:
+          <pre class="code-block">#define WIFI_SSID     "YourWiFi"
+#define WIFI_PASSWORD "YourPassword"
+#define DEVICE_ID     "..."   // from your dashboard
+#define DEVICE_TOKEN  "..."   // the token you just copied
+#define PC_MAC        "AA:BB:CC:DD:EE:FF"  // your PC's MAC</pre>
+        </li>
+        <li>
+          <strong>Wire up the ESP32</strong><br>
+          Connect DHT22 to pin D4 · status LED to D2 · power sense to D34 · power button to D26 · reset button to D27.
+        </li>
+        <li>
+          <strong>Flash and monitor</strong><br>
+          <code>pio run -e esp32dev --target upload && pio device monitor</code><br>
+          The LED will blink slowly while connecting, then go solid when online.
+        </li>
+      </ol>
+      <div class="modal-actions">
         <button class="btn btn-primary" id="done-btn">Done</button>
       </div>
     </div>

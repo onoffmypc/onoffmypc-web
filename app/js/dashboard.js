@@ -43,7 +43,7 @@ function deviceCard(d) {
   return `
     <div class="device-card" data-id="${esc(d.id)}">
       <div class="device-card-header">
-        <span class="device-name">${esc(d.name)}</span>
+        <span class="device-name" id="name-${esc(d.id)}">${esc(d.name)}</span>
         <span class="badge badge-offline" id="badge-${esc(d.id)}">—</span>
       </div>
       <div class="device-controls">
@@ -53,7 +53,10 @@ function deviceCard(d) {
       </div>
       <div class="device-footer">
         <a href="/device.html?id=${esc(d.id)}&name=${nameParam}">View details →</a>
-        <button class="delete-btn" onclick="deleteDevice('${esc(d.id)}','${esc(d.name)}')">Delete</button>
+        <span class="footer-actions">
+          <button class="ghost-btn" onclick="startRename('${esc(d.id)}')">Rename</button>
+          <button class="delete-btn" onclick="deleteDevice('${esc(d.id)}','${esc(d.name)}')">Delete</button>
+        </span>
       </div>
     </div>`
 }
@@ -95,11 +98,47 @@ async function deleteDevice(id, name) {
   renderDevices()
 }
 
+function startRename(id) {
+  const device = devices.find(d => d.id === id)
+  if (!device) return
+  const nameEl = document.getElementById(`name-${id}`)
+  if (!nameEl) return
+
+  const input = document.createElement('input')
+  input.type = 'text'
+  input.className = 'inline-rename'
+  input.value = device.name
+  input.maxLength = 64
+
+  nameEl.replaceWith(input)
+  input.select()
+
+  async function commit() {
+    const newName = input.value.trim()
+    if (!newName || newName === device.name) {
+      renderDevices()
+      return
+    }
+    const { error } = await api.renameDevice(id, newName)
+    if (error) { toast(error, 'error'); renderDevices(); return }
+    device.name = newName
+    toast('Device renamed')
+    renderDevices()
+  }
+
+  input.addEventListener('blur', commit)
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { input.blur() }
+    if (e.key === 'Escape') { device._cancel = true; renderDevices() }
+  })
+}
+
 // ── Add device modal ──
 function openAddModal() {
   document.getElementById('add-modal').style.display = 'flex'
   document.getElementById('modal-form').style.display = 'block'
   document.getElementById('token-reveal').style.display = 'none'
+  document.getElementById('setup-guide').style.display = 'none'
   document.getElementById('add-error').classList.remove('show')
   document.getElementById('device-name').value = ''
   setTimeout(() => document.getElementById('device-name').focus(), 50)
@@ -148,6 +187,11 @@ document.getElementById('copy-btn').addEventListener('click', () => {
   navigator.clipboard.writeText(token).then(() => toast('Token copied'))
 })
 
+document.getElementById('show-setup-btn').addEventListener('click', () => {
+  document.getElementById('token-reveal').style.display = 'none'
+  document.getElementById('setup-guide').style.display = 'block'
+})
+
 document.getElementById('done-btn').addEventListener('click', () => {
   document.getElementById('add-modal').style.display = 'none'
 })
@@ -156,5 +200,8 @@ document.getElementById('logout-btn').addEventListener('click', () => {
   api.token.clear()
   location.replace('/login.html')
 })
+
+// Auto-refresh device statuses every 30 seconds
+setInterval(() => devices.forEach(fetchStatus), 30000)
 
 loadDevices()
