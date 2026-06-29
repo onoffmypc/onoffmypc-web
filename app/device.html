@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Device — OnOffMyPC</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+
+<nav class="app-nav">
+  <div class="app-nav-inner">
+    <span class="app-logo">OnOffMyPC</span>
+    <button class="btn btn-ghost btn-sm" id="logout-btn">Sign out</button>
+  </div>
+</nav>
+
+<main class="app-main">
+  <a href="/dashboard.html" class="back-link">← Back to devices</a>
+
+  <div class="device-detail-header">
+    <h1 id="device-title">Device</h1>
+    <span class="badge badge-offline" id="device-status">—</span>
+  </div>
+
+  <p id="loading" class="loading">Loading…</p>
+
+  <div id="content" style="display:none">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">PC State</div>
+        <div class="stat-value" id="stat-pc">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Temperature</div>
+        <div class="stat-value" id="stat-temp">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Humidity</div>
+        <div class="stat-value" id="stat-humidity">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Signal</div>
+        <div class="stat-value" id="stat-rssi">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Last Update</div>
+        <div class="stat-value" id="stat-updated" style="font-size:1rem">—</div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <button class="btn btn-success" id="cmd-power-on">Power On</button>
+      <button class="btn btn-danger"  id="cmd-power-off">Power Off</button>
+      <button class="btn btn-warn"    id="cmd-reset">Reset</button>
+    </div>
+
+    <div class="table-section">
+      <h2>Telemetry History</h2>
+      <table>
+        <thead>
+          <tr><th>Time</th><th>PC</th><th>Temp</th><th>Humidity</th><th>RSSI</th></tr>
+        </thead>
+        <tbody id="telemetry-body"></tbody>
+      </table>
+    </div>
+
+    <div class="table-section">
+      <h2>Command History</h2>
+      <table>
+        <thead>
+          <tr><th>Time</th><th>Command</th><th>Status</th></tr>
+        </thead>
+        <tbody id="commands-body"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/device.js"></script>
+</body>
+</html>
