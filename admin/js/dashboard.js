@@ -5,7 +5,7 @@
   if (!key || Date.now() > expires) {
     sessionStorage.removeItem('admin_key')
     sessionStorage.removeItem('admin_key_expires')
-    location.replace('/admin/index.html')
+    location.replace('/')
   }
 })()
 
