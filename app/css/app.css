@@ -151,6 +151,16 @@ a { color: var(--accent); text-decoration: none; }
 
 .auth-switch { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
 
+/* ── Password show/hide toggle ── */
+.pass-wrap { position: relative; }
+.pass-wrap input { padding-right: 2.75rem; width: 100%; box-sizing: border-box; }
+.pass-eye {
+  position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: var(--muted);
+  padding: .25rem; display: flex; align-items: center; line-height: 0;
+}
+.pass-eye:hover { color: var(--text); }
+
 /* ── App nav ── */
 .app-nav {
   border-bottom: 1px solid var(--border);

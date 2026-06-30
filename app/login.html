@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign In — OnOffMyPC</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="/css/app.css?v=2" />
 </head>
 <body>
 
@@ -14,6 +14,7 @@
     <h1>Sign in</h1>
     <p class="subtitle">Control your PC from anywhere.</p>
 
+    <div id="success" class="success-msg"></div>
     <div id="error" class="error-msg"></div>
 
     <form id="login-form">
@@ -23,7 +24,12 @@
       </div>
       <div class="field">
         <label for="password">Password</label>
-        <input type="password" id="password" autocomplete="current-password" placeholder="••••••••" required />
+        <div class="pass-wrap">
+          <input type="password" id="password" autocomplete="current-password" placeholder="••••••••" required />
+          <button type="button" class="pass-eye" aria-label="Show password" onclick="togglePass('password', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary btn-full">Sign in</button>
     </form>
@@ -33,7 +39,8 @@
   </div>
 </div>
 
-<script src="/js/api.js"></script>
-<script src="/js/auth.js"></script>
+<script src="/js/api.js?v=2"></script>
+<script src="/js/ui.js?v=2"></script>
+<script src="/js/auth.js?v=2"></script>
 </body>
 </html>

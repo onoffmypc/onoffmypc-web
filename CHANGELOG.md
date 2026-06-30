@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-06-30
+
+### Added
+- Password show/hide toggle (eye icon) on all password fields: login, register, reset-password
+
+### Fixed
+- Stale browser cache served old `api.js` (without `me`) and old `dashboard.js` — added `?v=2` query to all script and CSS tags to force fresh fetch
+- `api.me is not a function` on account page — caused by cached old api.js; resolved by cache-bust
+- `Cannot read properties of null (reading 'addEventListener')` on dashboard — caused by cached old dashboard.js crashing before logout listener was attached; resolved by cache-bust
+- Logout button unresponsive — cascade of the dashboard.js crash above; now works correctly
+
 ## [0.8.0] - 2026-06-30
 
 ### Added
