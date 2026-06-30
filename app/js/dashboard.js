@@ -49,6 +49,7 @@ function deviceCard(d) {
       <div class="device-controls">
         <button class="btn btn-success btn-sm" onclick="sendCmd('${esc(d.id)}','power_on')">Power On</button>
         <button class="btn btn-danger btn-sm"  onclick="sendCmd('${esc(d.id)}','power_off')">Power Off</button>
+        <button class="btn btn-danger btn-sm"  onclick="sendCmd('${esc(d.id)}','power_off_force')" title="Hold power button 6s">Force Off</button>
         <button class="btn btn-warn btn-sm"    onclick="sendCmd('${esc(d.id)}','reset')">Reset</button>
       </div>
       <div class="device-footer">
@@ -79,7 +80,10 @@ async function fetchStatus(device) {
 }
 
 async function sendCmd(deviceId, type) {
-  const labels = { power_on: 'Power On', power_off: 'Power Off', reset: 'Reset' }
+  const labels = { power_on: 'Power On', power_off: 'Power Off', power_off_force: 'Force Off', reset: 'Reset' }
+  if (type === 'power_off_force') {
+    if (!confirm('Force Off holds the power button for 6 seconds and cuts power immediately. Use only if normal Power Off has no effect. Continue?')) return
+  }
   const { data, error } = await api.sendCommand(deviceId, type)
   if (error) { toast(error, 'error'); return }
   if (!data.delivered) {
