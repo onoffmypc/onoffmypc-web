@@ -165,6 +165,51 @@ async function load() {
   if (activityRes.data) renderActivity(activityRes.data)
 }
 
+// ── Create user modal ─────────────────────────────────────────────────────────
+
+document.getElementById('create-user-btn').addEventListener('click', () => {
+  document.getElementById('cu-email').value    = ''
+  document.getElementById('cu-password').value = ''
+  document.getElementById('create-user-error').classList.remove('show')
+  document.getElementById('create-user-modal').style.display = 'flex'
+  setTimeout(() => document.getElementById('cu-email').focus(), 50)
+})
+
+document.getElementById('cu-cancel').addEventListener('click', () => {
+  document.getElementById('create-user-modal').style.display = 'none'
+})
+
+document.getElementById('cu-submit').addEventListener('click', async () => {
+  const email    = document.getElementById('cu-email').value.trim()
+  const password = document.getElementById('cu-password').value
+  const errEl    = document.getElementById('create-user-error')
+  errEl.classList.remove('show')
+
+  if (!email || !password) {
+    errEl.textContent = 'Email and password are required.'
+    errEl.classList.add('show')
+    return
+  }
+
+  const btn = document.getElementById('cu-submit')
+  btn.disabled = true
+  btn.textContent = 'Creating…'
+
+  const { error } = await adminApi.createUser(email, password)
+  btn.disabled = false
+  btn.textContent = 'Create'
+
+  if (error) {
+    errEl.textContent = error
+    errEl.classList.add('show')
+    return
+  }
+
+  document.getElementById('create-user-modal').style.display = 'none'
+  toast(`User ${email} created`)
+  load()
+})
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 document.getElementById('signout-btn').addEventListener('click', () => adminApi.signOut())

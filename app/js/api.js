@@ -32,7 +32,7 @@ const api = {
   token: { get: getToken, set: setToken, clear: clearAuth },
   requireAuth,
   login:        (email, password) => apiReq('POST', '/auth/login',      { email, password }),
-  register:     (email, password) => apiReq('POST', '/auth/register',   { email, password }),
+  register:     (email, password, invite_code) => apiReq('POST', '/auth/register', { email, password, invite_code }),
   devices:      ()                => apiReq('GET',  '/devices'),
   addDevice:    (name)            => apiReq('POST', '/devices',          { name }),
   renameDevice: (id, name)        => apiReq('PATCH',  `/devices/${id}`, { name }),

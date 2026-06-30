@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-06-30
+
+### Added
+- Admin panel now includes "Create User" form — invite users without open registration
+- Register page now includes invite code field; subtitle updated to "Early access — invite code required"
+
+### Changed
+- Removed backend technology names (Cloudflare, Workers, D1, SQLite, WebSocket) from `about.html` and `privacy-policy.html` — replaced with neutral wording
+- `about.html` meta description no longer mentions Cloudflare
+
 ## [0.4.0] - 2026-06-30
 
 ### Added

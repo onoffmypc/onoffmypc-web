@@ -12,7 +12,7 @@
   <div class="auth-card">
     <a href="https://onoffmypc.com" class="auth-logo">OnOffMyPC</a>
     <h1>Create account</h1>
-    <p class="subtitle">Free during early access.</p>
+    <p class="subtitle">Early access — invite code required.</p>
 
     <div id="error" class="error-msg"></div>
 
@@ -23,7 +23,11 @@
       </div>
       <div class="field">
         <label for="password">Password</label>
-        <input type="password" id="password" autocomplete="new-password" placeholder="••••••••" minlength="8" required />
+        <input type="password" id="password" autocomplete="new-password" placeholder="Min. 8 characters" minlength="8" required />
+      </div>
+      <div class="field">
+        <label for="invite-code">Invite Code</label>
+        <input type="text" id="invite-code" autocomplete="off" placeholder="Enter your invite code" required />
       </div>
       <button type="submit" class="btn btn-primary btn-full">Create account</button>
     </form>

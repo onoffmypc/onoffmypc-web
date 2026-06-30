@@ -24,11 +24,12 @@ async function req(method, path, body) {
 }
 
 const adminApi = {
-  stats:        ()   => req('GET',    '/admin/stats'),
-  users:        ()   => req('GET',    '/admin/users'),
-  devices:      ()   => req('GET',    '/admin/devices'),
-  activity:     ()   => req('GET',    '/admin/activity'),
-  deleteUser:   (id) => req('DELETE', `/admin/users/${id}`),
-  deleteDevice: (id) => req('DELETE', `/admin/devices/${id}`),
-  signOut:      ()   => { sessionStorage.removeItem('admin_key'); location.replace('/admin/index.html') },
+  stats:        ()                     => req('GET',    '/admin/stats'),
+  users:        ()                     => req('GET',    '/admin/users'),
+  devices:      ()                     => req('GET',    '/admin/devices'),
+  activity:     ()                     => req('GET',    '/admin/activity'),
+  createUser:   (email, password)      => req('POST',   '/admin/users', { email, password }),
+  deleteUser:   (id)                   => req('DELETE', `/admin/users/${id}`),
+  deleteDevice: (id)                   => req('DELETE', `/admin/devices/${id}`),
+  signOut:      ()                     => { sessionStorage.removeItem('admin_key'); location.replace('/admin/index.html') },
 }

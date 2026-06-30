@@ -27,7 +27,8 @@ form.addEventListener('submit', async (e) => {
   setLoading(true)
 
   if (isRegister) {
-    const { error } = await api.register(email, password)
+    const inviteCode = (document.getElementById('invite-code')?.value ?? '').trim()
+    const { error } = await api.register(email, password, inviteCode)
     if (error) { showError(error); setLoading(false); return }
     const { data, error: loginErr } = await api.login(email, password)
     if (loginErr) { location.replace('/login.html'); return }
