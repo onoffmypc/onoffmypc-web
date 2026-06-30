@@ -2,12 +2,15 @@ if (!api.requireAuth()) throw new Error('unauthenticated')
 
 const params   = new URLSearchParams(location.search)
 const deviceId = params.get('id')
-const name     = params.get('name') || 'Device'
 
 if (!deviceId) location.replace('/dashboard.html')
 
-document.title = `${name} — OnOffMyPC`
-document.getElementById('device-title').textContent = name
+// Load device name from API (not URL — URL param becomes stale after a rename)
+api.getDevice(deviceId).then(({ data, error }) => {
+  if (error || !data) { location.replace('/dashboard.html'); return }
+  document.title = `${data.name} — OnOffMyPC`
+  document.getElementById('device-title').textContent = data.name
+})
 
 function toast(msg, type = 'success') {
   const el = document.createElement('div')

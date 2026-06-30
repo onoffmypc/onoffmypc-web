@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account — OnOffMyPC</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+
+<nav class="app-nav">
+  <div class="app-nav-inner">
+    <a href="/dashboard.html" class="app-logo" style="color:var(--text);text-decoration:none">OnOffMyPC</a>
+    <div style="display:flex;gap:.5rem;align-items:center">
+      <a href="/dashboard.html" class="btn btn-ghost btn-sm">← Devices</a>
+      <button class="btn btn-ghost btn-sm" id="logout-btn">Sign out</button>
+    </div>
+  </div>
+</nav>
+
+<main class="app-main" style="max-width:600px">
+
+  <h1 style="font-size:1.3rem;font-weight:700;margin-bottom:1.75rem">Account</h1>
+
+  <!-- Profile -->
+  <div class="settings-section">
+    <h2 class="settings-heading">Profile</h2>
+    <div class="settings-card">
+      <div class="settings-row">
+        <span class="settings-label">Email</span>
+        <span id="account-email" style="color:var(--muted)">—</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Member since</span>
+        <span id="account-since" style="color:var(--muted)">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Danger zone -->
+  <div class="settings-section" style="margin-top:2.5rem">
+    <h2 class="settings-heading" style="color:var(--red)">Danger Zone</h2>
+    <div class="settings-card" style="border-color:rgba(239,68,68,0.25)">
+      <div class="settings-row" style="align-items:flex-start;gap:1rem">
+        <div>
+          <div style="font-weight:600;margin-bottom:.25rem">Delete account</div>
+          <div style="font-size:.8rem;color:var(--muted);line-height:1.5">
+            Permanently deletes your account, all devices, commands, and telemetry.
+            This cannot be undone.
+          </div>
+        </div>
+        <button class="btn btn-danger btn-sm" style="flex-shrink:0" id="delete-account-btn">Delete account</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Delete account confirmation modal -->
+<div id="delete-modal" class="modal-backdrop" style="display:none">
+  <div class="modal">
+    <h2>Delete your account?</h2>
+    <p style="font-size:.875rem;color:var(--muted);margin:0.75rem 0 1.25rem;line-height:1.6">
+      This permanently deletes your account and all data. Type your email address to confirm.
+    </p>
+    <div id="delete-error" class="error-msg"></div>
+    <div class="field">
+      <label>Your email</label>
+      <input type="email" id="delete-confirm-email" placeholder="you@example.com" autocomplete="off" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="delete-cancel">Cancel</button>
+      <button class="btn btn-danger" id="delete-confirm">Delete forever</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/account.js"></script>
+</body>
+</html>

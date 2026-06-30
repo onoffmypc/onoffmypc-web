@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-06-30
+
+### Added
+- `app/account.html` — Account page: shows email, join date, and a Danger Zone with self-service account deletion (requires typing email to confirm)
+- Account link added to nav in dashboard and device detail pages
+
+### Fixed
+- Device detail page was reading device name from URL `?name=` param — now fetched from `GET /devices/:id` API so name stays accurate after a rename
+- `openAddModal()` was not clearing Device ID / Token fields on re-open, showing stale credentials from a previous session
+
 ## [0.5.0] - 2026-06-30
 
 ### Added

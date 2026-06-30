@@ -461,6 +461,19 @@ tr:hover td { background: var(--surface); }
 /* ── Loading ── */
 .loading { color: var(--muted); font-size: 0.9rem; padding: 2rem 0; }
 
+/* ── Account page ── */
+.settings-section { margin-bottom: 2rem; }
+.settings-heading { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.65rem; }
+.settings-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.settings-row { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.1rem; border-bottom: 1px solid var(--border); }
+.settings-row:last-child { border-bottom: none; }
+.settings-label { font-size: 0.875rem; font-weight: 500; }
+
+/* ── Modal (account delete) ── */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 1rem; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; width: 100%; max-width: 400px; }
+.modal h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+
 @media (max-width: 600px) {
   .app-main { padding: 1.5rem 1rem; }
   .controls-row { gap: 0.5rem; }

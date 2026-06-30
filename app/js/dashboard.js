@@ -141,6 +141,9 @@ function openAddModal() {
   document.getElementById('setup-guide').style.display = 'none'
   document.getElementById('add-error').classList.remove('show')
   document.getElementById('device-name').value = ''
+  // Bug fix: clear stale credential values from a previous modal open
+  document.getElementById('device-id').textContent    = ''
+  document.getElementById('device-token').textContent = ''
   setTimeout(() => document.getElementById('device-name').focus(), 50)
 }
 
