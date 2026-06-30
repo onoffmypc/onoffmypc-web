@@ -11,7 +11,7 @@
 <nav class="app-nav">
   <div class="app-nav-inner">
     <span class="app-logo">OnOffMyPC</span>
-    <div style="display:flex;gap:.5rem;align-items:center">
+    <div class="nav-actions">
       <a href="/account.html" class="btn btn-ghost btn-sm">Account</a>
       <button class="btn btn-ghost btn-sm" id="logout-btn">Sign out</button>
     </div>
@@ -29,7 +29,7 @@
 </main>
 
 <!-- Add device modal -->
-<div id="add-modal" class="modal-backdrop" style="display:none">
+<div id="add-modal" class="modal-backdrop is-hidden">
   <div class="modal">
     <h2>Add Device</h2>
 
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div id="token-reveal" style="display:none">
+    <div id="token-reveal" class="is-hidden">
       <p class="token-hint">Save your Device ID and Token — you'll enter both into the ESP32 setup page. The token won't be shown again.</p>
       <div class="credential-row">
         <label class="credential-label">Device ID</label>
@@ -62,7 +62,7 @@
       </div>
     </div>
 
-    <div id="setup-guide" style="display:none">
+    <div id="setup-guide" class="is-hidden">
       <h3>Set up your ESP32</h3>
       <ol class="setup-steps">
         <li>

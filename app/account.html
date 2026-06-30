@@ -10,17 +10,17 @@
 
 <nav class="app-nav">
   <div class="app-nav-inner">
-    <a href="/dashboard.html" class="app-logo" style="color:var(--text);text-decoration:none">OnOffMyPC</a>
-    <div style="display:flex;gap:.5rem;align-items:center">
+    <a href="/dashboard.html" class="app-logo logo-link">OnOffMyPC</a>
+    <div class="nav-actions">
       <a href="/dashboard.html" class="btn btn-ghost btn-sm">← Devices</a>
       <button class="btn btn-ghost btn-sm" id="logout-btn">Sign out</button>
     </div>
   </div>
 </nav>
 
-<main class="app-main" style="max-width:600px">
+<main class="app-main account-main">
 
-  <h1 style="font-size:1.3rem;font-weight:700;margin-bottom:1.75rem">Account</h1>
+  <h1 class="account-title">Account</h1>
 
   <!-- Profile -->
   <div class="settings-section">
@@ -28,35 +28,35 @@
     <div class="settings-card">
       <div class="settings-row">
         <span class="settings-label">Email</span>
-        <span id="account-email" style="color:var(--muted)">—</span>
+        <span id="account-email" class="text-muted">—</span>
       </div>
-      <div class="settings-row" id="verify-row" style="display:none">
+      <div class="settings-row is-hidden" id="verify-row">
         <span class="settings-label">Email status</span>
         <span>
-          <span class="badge badge-offline" style="margin-right:.5rem">Unverified</span>
+          <span class="badge badge-offline badge-mr">Unverified</span>
           <button class="btn btn-ghost btn-sm" id="resend-verify-btn">Resend email</button>
         </span>
       </div>
       <div class="settings-row">
         <span class="settings-label">Member since</span>
-        <span id="account-since" style="color:var(--muted)">—</span>
+        <span id="account-since" class="text-muted">—</span>
       </div>
     </div>
   </div>
 
   <!-- Danger zone -->
-  <div class="settings-section" style="margin-top:2.5rem">
-    <h2 class="settings-heading" style="color:var(--red)">Danger Zone</h2>
-    <div class="settings-card" style="border-color:rgba(239,68,68,0.25)">
-      <div class="settings-row" style="align-items:flex-start;gap:1rem">
+  <div class="settings-section danger-section">
+    <h2 class="settings-heading danger-heading">Danger Zone</h2>
+    <div class="settings-card danger-card">
+      <div class="settings-row danger-row">
         <div>
-          <div style="font-weight:600;margin-bottom:.25rem">Delete account</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.5">
+          <div class="danger-title">Delete account</div>
+          <div class="danger-desc">
             Permanently deletes your account, all devices, commands, and telemetry.
             This cannot be undone.
           </div>
         </div>
-        <button class="btn btn-danger btn-sm" style="flex-shrink:0" id="delete-account-btn">Delete account</button>
+        <button class="btn btn-danger btn-sm btn-noshrink" id="delete-account-btn">Delete account</button>
       </div>
     </div>
   </div>
@@ -64,10 +64,10 @@
 </main>
 
 <!-- Delete account confirmation modal -->
-<div id="delete-modal" class="modal-backdrop" style="display:none">
+<div id="delete-modal" class="modal-backdrop is-hidden">
   <div class="modal">
     <h2>Delete your account?</h2>
-    <p style="font-size:.875rem;color:var(--muted);margin:0.75rem 0 1.25rem;line-height:1.6">
+    <p class="modal-note">
       This permanently deletes your account and all data. Type your email address to confirm.
     </p>
     <div id="delete-error" class="error-msg"></div>

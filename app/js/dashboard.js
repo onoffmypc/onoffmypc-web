@@ -31,7 +31,7 @@ function renderDevices() {
     el.innerHTML = `
       <div class="empty-state">
         <p>No devices yet.</p>
-        <button class="btn btn-primary" onclick="openAddModal()">Add your first device</button>
+        <button class="btn btn-primary" data-action="open-add">Add your first device</button>
       </div>`
     return
   }
@@ -47,16 +47,16 @@ function deviceCard(d) {
         <span class="badge badge-offline" id="badge-${esc(d.id)}">—</span>
       </div>
       <div class="device-controls">
-        <button class="btn btn-success btn-sm" onclick="sendCmd('${esc(d.id)}','power_on')">Power On</button>
-        <button class="btn btn-danger btn-sm"  onclick="sendCmd('${esc(d.id)}','power_off')">Power Off</button>
-        <button class="btn btn-danger btn-sm"  onclick="sendCmd('${esc(d.id)}','power_off_force')" title="Hold power button 6s">Force Off</button>
-        <button class="btn btn-warn btn-sm"    onclick="sendCmd('${esc(d.id)}','reset')">Reset</button>
+        <button class="btn btn-success btn-sm" data-action="cmd" data-id="${esc(d.id)}" data-cmd="power_on">Power On</button>
+        <button class="btn btn-danger btn-sm"  data-action="cmd" data-id="${esc(d.id)}" data-cmd="power_off">Power Off</button>
+        <button class="btn btn-danger btn-sm"  data-action="cmd" data-id="${esc(d.id)}" data-cmd="power_off_force" title="Hold power button 6s">Force Off</button>
+        <button class="btn btn-warn btn-sm"    data-action="cmd" data-id="${esc(d.id)}" data-cmd="reset">Reset</button>
       </div>
       <div class="device-footer">
         <a href="/device.html?id=${esc(d.id)}&name=${nameParam}">View details →</a>
         <span class="footer-actions">
-          <button class="ghost-btn" onclick="startRename('${esc(d.id)}')">Rename</button>
-          <button class="delete-btn" onclick="deleteDevice('${esc(d.id)}','${esc(d.name)}')">Delete</button>
+          <button class="ghost-btn" data-action="rename" data-id="${esc(d.id)}">Rename</button>
+          <button class="delete-btn" data-action="delete" data-id="${esc(d.id)}" data-name="${esc(d.name)}">Delete</button>
         </span>
       </div>
     </div>`
@@ -136,6 +136,18 @@ function startRename(id) {
     if (e.key === 'Escape') { device._cancel = true; renderDevices() }
   })
 }
+
+// ── Device list event delegation (replaces inline onclick on generated cards) ──
+
+document.getElementById('devices-list').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]')
+  if (!btn) return
+  const { action, id, cmd, name } = btn.dataset
+  if (action === 'open-add')  openAddModal()
+  else if (action === 'cmd')    sendCmd(id, cmd)
+  else if (action === 'rename') startRename(id)
+  else if (action === 'delete') deleteDevice(id, name)
+})
 
 // ── Add device modal ──
 function openAddModal() {

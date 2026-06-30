@@ -501,3 +501,24 @@ tr:hover td { background: var(--surface); }
   .controls-row { gap: 0.5rem; }
   .stat-value { font-size: 1.1rem; }
 }
+
+/* ── Utility (CSP-safe replacements for inline styles) ── */
+.is-hidden    { display: none }
+.nav-actions  { display: flex; gap: .5rem; align-items: center }
+.logo-link    { color: var(--text); text-decoration: none }
+.text-muted   { color: var(--muted) }
+.text-on      { color: var(--green) }
+.text-off     { color: var(--red) }
+.badge-mr     { margin-right: .5rem }
+.stat-sm      { font-size: 1rem }
+/* Account page */
+.account-main   { max-width: 600px }
+.account-title  { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.75rem }
+.danger-section { margin-top: 2.5rem }
+.danger-heading { color: var(--red) }
+.danger-card    { border-color: rgba(239,68,68,0.25) }
+.danger-row     { align-items: flex-start; gap: 1rem }
+.danger-title   { font-weight: 600; margin-bottom: .25rem }
+.danger-desc    { font-size: .8rem; color: var(--muted); line-height: 1.5 }
+.btn-noshrink   { flex-shrink: 0 }
+.modal-note     { font-size: .875rem; color: var(--muted); margin: .75rem 0 1.25rem; line-height: 1.6 }

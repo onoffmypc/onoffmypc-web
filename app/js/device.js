@@ -88,13 +88,13 @@ function renderStats(latest) {
 function renderTelemetryTable(rows) {
   const el = document.getElementById('telemetry-body')
   if (rows.length === 0) {
-    el.innerHTML = '<tr><td colspan="5" style="color:var(--muted)">No telemetry yet.</td></tr>'
+    el.innerHTML = '<tr><td colspan="5" class="text-muted">No telemetry yet.</td></tr>'
     return
   }
   el.innerHTML = rows.map(r => `
     <tr>
       <td>${fmtTime(r.recorded_at)}</td>
-      <td>${r.pc_on === 1 ? '<span style="color:var(--green)">On</span>' : '<span style="color:var(--red)">Off</span>'}</td>
+      <td>${r.pc_on === 1 ? '<span class="text-on">On</span>' : '<span class="text-off">Off</span>'}</td>
       <td>${r.room_temp     != null ? r.room_temp.toFixed(1) + '°C' : '—'}</td>
       <td>${r.room_humidity != null ? r.room_humidity.toFixed(0) + '%' : '—'}</td>
       <td>${r.rssi          != null ? r.rssi + ' dBm' : '—'}</td>
@@ -104,7 +104,7 @@ function renderTelemetryTable(rows) {
 function renderCommandsTable(rows) {
   const el = document.getElementById('commands-body')
   if (rows.length === 0) {
-    el.innerHTML = '<tr><td colspan="3" style="color:var(--muted)">No commands yet.</td></tr>'
+    el.innerHTML = '<tr><td colspan="3" class="text-muted">No commands yet.</td></tr>'
     return
   }
   el.innerHTML = rows.map(r => `

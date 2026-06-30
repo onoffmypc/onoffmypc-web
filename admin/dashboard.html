@@ -30,7 +30,7 @@
   <div class="section">
     <div class="section-header">
       <h2>Users</h2>
-      <div style="display:flex;gap:.5rem;align-items:center">
+      <div class="actions-bar">
         <span class="section-count" id="users-count"></span>
         <button class="btn btn-primary btn-sm" id="create-user-btn">+ Create User</button>
       </div>
@@ -104,7 +104,7 @@
 </main>
 
 <!-- Create user modal -->
-<div id="create-user-modal" class="modal-backdrop" style="display:none">
+<div id="create-user-modal" class="modal-backdrop is-hidden">
   <div class="modal">
     <h3>Create User</h3>
     <div id="create-user-error" class="error-msg"></div>
@@ -124,7 +124,7 @@
 </div>
 
 <!-- Confirm modal -->
-<div id="confirm-modal" class="modal-backdrop" style="display:none">
+<div id="confirm-modal" class="modal-backdrop is-hidden">
   <div class="modal">
     <h3 id="confirm-title">Confirm</h3>
     <p id="confirm-msg"></p>

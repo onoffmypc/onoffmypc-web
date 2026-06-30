@@ -94,7 +94,7 @@ function renderUsers(users) {
       <td class="mono">${fmtDate(u.created_at)}</td>
       <td>${u.device_count}</td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteUser('${esc(u.id)}','${esc(u.email)}')">Delete</button>
+        <button class="btn btn-danger btn-sm" data-action="delete-user" data-id="${esc(u.id)}" data-email="${esc(u.email)}">Delete</button>
       </td>
     </tr>`).join('')
 }
@@ -116,7 +116,7 @@ function renderDevices(devices) {
       <td class="mono">${timeAgo(d.last_seen_at)}</td>
       <td class="mono">${esc(d.firmware_version) || '—'}</td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteDevice('${esc(d.id)}','${esc(d.name)}')">Delete</button>
+        <button class="btn btn-danger btn-sm" data-action="delete-device" data-id="${esc(d.id)}" data-name="${esc(d.name)}">Delete</button>
       </td>
     </tr>`
   }).join('')
@@ -231,6 +231,20 @@ document.getElementById('cu-submit').addEventListener('click', async () => {
   document.getElementById('create-user-modal').style.display = 'none'
   toast(`User ${email} created`)
   load()
+})
+
+// ── Table event delegation (replaces inline onclick on generated rows) ────────
+
+document.getElementById('users-body').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]')
+  if (!btn) return
+  if (btn.dataset.action === 'delete-user') deleteUser(btn.dataset.id, btn.dataset.email)
+})
+
+document.getElementById('devices-body').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]')
+  if (!btn) return
+  if (btn.dataset.action === 'delete-device') deleteDevice(btn.dataset.id, btn.dataset.name)
 })
 
 // ── Init ──────────────────────────────────────────────────────────────────────

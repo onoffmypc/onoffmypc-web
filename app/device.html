@@ -11,7 +11,7 @@
 <nav class="app-nav">
   <div class="app-nav-inner">
     <span class="app-logo">OnOffMyPC</span>
-    <div style="display:flex;gap:.5rem;align-items:center">
+    <div class="nav-actions">
       <a href="/account.html" class="btn btn-ghost btn-sm">Account</a>
       <button class="btn btn-ghost btn-sm" id="logout-btn">Sign out</button>
     </div>
@@ -28,7 +28,7 @@
 
   <p id="loading" class="loading">Loading…</p>
 
-  <div id="content" style="display:none">
+  <div id="content" class="is-hidden">
     <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-label">PC State</div>
@@ -48,7 +48,7 @@
       </div>
       <div class="stat-card">
         <div class="stat-label">Last Update</div>
-        <div class="stat-value" id="stat-updated" style="font-size:1rem">—</div>
+        <div class="stat-value stat-sm" id="stat-updated">—</div>
       </div>
     </div>
 
