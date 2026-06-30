@@ -43,40 +43,50 @@
     </div>
 
     <div id="token-reveal" style="display:none">
-      <p class="token-hint">Copy this token — you'll paste it into your ESP32 firmware. You won't see it again.</p>
-      <div class="token-box" id="device-token"></div>
+      <p class="token-hint">Save your Device ID and Token — you'll enter both into the ESP32 setup page. The token won't be shown again.</p>
+      <div class="credential-row">
+        <label class="credential-label">Device ID</label>
+        <div class="token-box" id="device-id"></div>
+        <button class="btn btn-ghost btn-sm" id="copy-id-btn">Copy</button>
+      </div>
+      <div class="credential-row">
+        <label class="credential-label">Device Token</label>
+        <div class="token-box" id="device-token"></div>
+        <button class="btn btn-ghost btn-sm" id="copy-token-btn">Copy</button>
+      </div>
       <div class="modal-actions">
-        <button class="btn btn-ghost" id="copy-btn">Copy token</button>
         <button class="btn btn-primary" id="show-setup-btn">Setup guide →</button>
       </div>
     </div>
 
     <div id="setup-guide" style="display:none">
-      <h3>Flash your ESP32</h3>
+      <h3>Set up your ESP32</h3>
       <ol class="setup-steps">
         <li>
-          <strong>Download the firmware</strong><br>
-          Clone or download <a href="https://github.com/onoffmypc/onoffmypc-firmware-release" target="_blank" rel="noopener">onoffmypc-firmware-release</a> and open it in VS Code with the PlatformIO extension.
+          <strong>Flash the firmware</strong><br>
+          Download the latest <code>.bin</code> from the
+          <a href="https://github.com/onoffmypc/onoffmypc-firmware-release/releases" target="_blank" rel="noopener">firmware releases page</a>
+          and flash it to your ESP32 via USB.
         </li>
         <li>
-          <strong>Create <code>src/config.h</code></strong><br>
-          Copy <code>src/config.example.h</code> to <code>src/config.h</code> and fill in your values:
-          <pre class="code-block">#define WIFI_SSID     "YourWiFi"
-#define WIFI_PASSWORD "YourPassword"
-#define DEVICE_ID     "..."   // from your dashboard
-#define DEVICE_TOKEN  "..."   // the token you just copied
-#define PC_MAC        "AA:BB:CC:DD:EE:FF"  // your PC's MAC</pre>
+          <strong>Connect to the setup network</strong><br>
+          On first boot the device creates a Wi-Fi network named <strong>OnOffMyPC-XXXXXX</strong>.
+          Connect your phone or laptop to it — a setup page should open automatically.
+          If it doesn't, open a browser and go to <code>http://192.168.4.1</code>.
+        </li>
+        <li>
+          <strong>Enter your details</strong><br>
+          Fill in your Wi-Fi name and password, then paste the Device ID and Token from the previous screen.
+          Add your PC's MAC address for Wake-on-LAN (run <code>ipconfig /all</code> on Windows or <code>ip link</code> on Linux/macOS).
+          Tap <strong>Save &amp; Connect</strong>.
         </li>
         <li>
           <strong>Wire up the ESP32</strong><br>
-          Connect DHT22 to pin D4 · status LED to D2 · power sense to D34 · power button to D26 · reset button to D27.
-        </li>
-        <li>
-          <strong>Flash and monitor</strong><br>
-          <code>pio run -e esp32dev --target upload && pio device monitor</code><br>
-          The LED will blink slowly while connecting, then go solid when online.
+          DHT22 → D4 · LED → D2 · power sense → D34 · power button → D26 · reset button → D27.
+          Enable Wake-on-LAN in your BIOS and network adapter settings.
         </li>
       </ol>
+      <p class="setup-note">The LED blinks while connecting and goes solid when online. To reconfigure, send <code>r</code> over the serial monitor.</p>
       <div class="modal-actions">
         <button class="btn btn-primary" id="done-btn">Done</button>
       </div>

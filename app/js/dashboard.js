@@ -178,11 +178,17 @@ document.getElementById('create-btn').addEventListener('click', async () => {
   renderDevices()
 
   document.getElementById('modal-form').style.display = 'none'
+  document.getElementById('device-id').textContent = data.id
   document.getElementById('device-token').textContent = data.token
   document.getElementById('token-reveal').style.display = 'block'
 })
 
-document.getElementById('copy-btn').addEventListener('click', () => {
+document.getElementById('copy-id-btn').addEventListener('click', () => {
+  const id = document.getElementById('device-id').textContent
+  navigator.clipboard.writeText(id).then(() => toast('Device ID copied'))
+})
+
+document.getElementById('copy-token-btn').addEventListener('click', () => {
   const token = document.getElementById('device-token').textContent
   navigator.clipboard.writeText(token).then(() => toast('Token copied'))
 })

@@ -340,6 +340,17 @@ a { color: var(--accent); text-decoration: none; }
 
 .token-hint { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
 
+.credential-row { margin-bottom: 0.75rem; }
+.credential-label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.3rem; }
+.credential-row .token-box { margin-bottom: 0.3rem; }
+
+.setup-steps { padding-left: 1.1rem; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+.setup-steps li { margin-bottom: 0.85rem; }
+.setup-steps li strong { color: var(--text); display: block; margin-bottom: 0.2rem; }
+.setup-steps code { font-size: 0.8rem; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.3rem; }
+.setup-note { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; line-height: 1.5; }
+.setup-note code { font-size: 0.8rem; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.3rem; }
+
 /* ── Toast ── */
 .toast-wrap {
   position: fixed;
