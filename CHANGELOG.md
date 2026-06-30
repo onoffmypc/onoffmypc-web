@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-06-30
+
+### Added
+- Force Off button on each device card on the dashboard (was only on the device detail page); includes confirm dialog
+- Security headers (`_headers`) added to `app/` and `admin/` deployments: CSP, HSTS, X-Frame-Options, X-Robots-Tag noindex
+- `ROADMAP.md` added to all three repos (web, backend, firmware) with complete audit of bugs, security gaps, and missing features
+
+### Fixed
+- "Get Started" and register links on marketing pages pointed to `/register` (no extension) which 404'd — now correctly link to `/register.html`
+- Admin dashboard had an unused `nav-env` element that was never populated — removed
+- Root `_headers` had stale `/app/*` and `/admin/*` rules that applied to the wrong deployment — cleaned up
+
 ## [0.9.0] - 2026-06-30
 
 ### Added
