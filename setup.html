@@ -27,8 +27,12 @@
 
   <div class="setup-steps">
     <div class="notice">
-      <strong>Early access:</strong> Full firmware documentation and a flashing tool are coming
-      soon. These steps outline the setup flow — some parts are still being finalised.
+      <strong>Early access:</strong> A one-click flashing tool is coming soon.
+      For now, flash the firmware with
+      <a href="https://esphome.github.io/esp-web-tools/" target="_blank" rel="noopener">ESP Web Tools</a>
+      or the <a href="https://docs.espressif.com/projects/esptool/en/latest/" target="_blank" rel="noopener">esptool CLI</a>.
+      Download the latest <code>.bin</code> from the
+      <a href="https://github.com/onoffmypc/onoffmypc-firmware-release/releases" target="_blank" rel="noopener">firmware releases page</a>.
     </div>
 
     <div class="step">
@@ -45,10 +49,10 @@
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <h3>Register your device</h3>
+        <h3>Add your device in the dashboard</h3>
         <p>
-          In the app, add a new device and give it a name. You'll receive a unique device token —
-          keep this safe, it's how your ESP32 authenticates to the service.
+          Go to <a href="https://app.onoffmypc.com">app.onoffmypc.com</a>, add a new device and give it a name.
+          Copy the <strong>Device ID</strong> and <strong>Device Token</strong> shown — you'll need them in step 5.
         </p>
       </div>
     </div>
@@ -56,10 +60,13 @@
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <h3>Flash the ESP32</h3>
+        <h3>Find your PC's MAC address</h3>
         <p>
-          Flash the OnOffMyPC firmware onto your ESP32. During setup, enter your Wi-Fi credentials
-          and your device token. The device will connect to the service automatically on boot.
+          Wake-on-LAN requires your PC's wired network adapter MAC address.
+          On <strong>Windows</strong> run <code>ipconfig /all</code> and look for the
+          "Physical Address" of your Ethernet adapter.
+          On <strong>Linux / macOS</strong> run <code>ip link</code> or <code>ifconfig</code>.
+          It looks like <code>AA:BB:CC:DD:EE:FF</code>.
         </p>
       </div>
     </div>
@@ -67,10 +74,11 @@
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <h3>Wire to your PC</h3>
+        <h3>Flash the firmware</h3>
         <p>
-          Connect the ESP32 output pin to your PC's power switch header on the motherboard. Enable
-          Wake-on-LAN in your BIOS/UEFI settings and your network adapter power management options.
+          Connect the ESP32 to your computer via USB and flash the firmware.
+          Once flashed, the device will boot and — if no configuration is stored yet —
+          create a Wi-Fi network named <strong>OnOffMyPC-XXXXXX</strong> (last 3 bytes of its MAC).
         </p>
       </div>
     </div>
@@ -78,10 +86,39 @@
     <div class="step">
       <div class="step-num">5</div>
       <div class="step-body">
+        <h3>Connect and configure</h3>
+        <p>
+          On your phone or laptop, join the <strong>OnOffMyPC-XXXXXX</strong> network.
+          A setup page should open automatically (captive portal). If it doesn't, open a browser and go to
+          <code>http://192.168.4.1</code>.
+          Enter your Wi-Fi name and password, your Device ID and Token from step 2, and your PC's MAC address from step 3.
+          Tap <strong>Save &amp; Connect</strong> — the device restarts and joins your network.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Wire to your PC</h3>
+        <p>
+          Connect the ESP32 GPIO pins to your motherboard's power switch and reset switch headers,
+          and the power LED header to the power-sense pin (via a small resistor voltage divider).
+          Enable <strong>Wake-on-LAN</strong> in your BIOS/UEFI settings and in your network adapter's
+          power management options so the PC can be powered on remotely.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
         <h3>You're done</h3>
         <p>
-          Open the app, check that your device shows as online, and try sending a power command.
-          Telemetry (power state, temperature, humidity) will appear in the dashboard within seconds.
+          Open the dashboard and check that your device shows as online. Try sending a power command —
+          telemetry (power state, temperature, humidity) will appear within seconds.
+          To reconfigure or change networks, send <code>r</code> over the serial monitor to factory-reset
+          and re-enter setup mode.
         </p>
       </div>
     </div>

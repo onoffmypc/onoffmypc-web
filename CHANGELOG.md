@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-06-30
+
+### Changed
+- Setup guide rewritten to reflect captive portal provisioning flow: added steps for finding PC MAC address, connecting to the OnOffMyPC setup AP, and using the browser setup page at `http://192.168.4.1`; removed references to editing `config.h`
+
 ## [0.2.0] - 2026-06-29
 
 ### Added
