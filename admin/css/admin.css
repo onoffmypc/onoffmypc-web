@@ -154,13 +154,15 @@ tbody tr:hover td { background: rgba(255,255,255,0.02); }
 .toast.error { border-color: var(--red); color: var(--red); }
 
 /* ── Utility ── */
-.is-hidden   { display: none }
 .actions-bar { display: flex; gap: .5rem; align-items: center }
 
 @keyframes slide-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 /* ── Confirm modal ── */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 200; }
+/* Must come after .modal-backdrop: equal specificity, so source order decides
+   initial visibility. Hidden by default; JS opens via inline style.display. */
+.is-hidden { display: none }
 .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; width: 100%; max-width: 380px; }
 .modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
 .modal p  { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.5; }

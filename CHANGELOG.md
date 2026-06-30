@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-06-30
+
+### Fixed
+- Admin dashboard modals (Create User, Confirm) rendered on top of each other and blocked the page right after login. In `admin.css` the `.is-hidden` utility was declared before `.modal-backdrop { display: flex }`; with equal specificity the later rule won, so the backdrops showed on load. Moved `.is-hidden` after `.modal-backdrop` (matching `app.css`) so modals stay hidden until opened. Bumped `admin.css` to `?v=3`.
+
 ## [1.2.0] - 2026-06-30
 
 ### Fixed
