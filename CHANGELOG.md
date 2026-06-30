@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-06-30
+
+### Added
+- `app/forgot-password.html` — request a password reset link (email form; always shows the same message regardless of whether the account exists)
+- `app/reset-password.html` — enter new password using the link from the reset email; shows useful errors for expired/used links
+- `app/verify-email.html` — auto-verifies email on click; redirects to dashboard if already logged in
+- Account page: shows "Unverified" badge and "Resend email" button when email is not yet confirmed
+- Login page: "Forgot password?" link
+- `api.js`: `forgotPassword`, `resetPassword`, `verifyEmail`, `resendVerify` methods
+
 ## [0.7.0] - 2026-06-30
 
 ### Added

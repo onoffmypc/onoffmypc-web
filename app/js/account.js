@@ -19,6 +19,20 @@ api.me().then(({ data, error }) => {
   userEmail = data.email
   document.getElementById('account-email').textContent = data.email
   document.getElementById('account-since').textContent = fmtDate(data.created_at)
+  if (!data.email_verified) {
+    document.getElementById('verify-row').style.display = ''
+  }
+})
+
+document.getElementById('resend-verify-btn').addEventListener('click', async (e) => {
+  const btn = e.currentTarget
+  btn.disabled = true
+  btn.textContent = 'Sending…'
+  const { error } = await api.resendVerify()
+  btn.disabled = false
+  btn.textContent = 'Resend email'
+  if (error) { toast(error, 'error'); return }
+  toast('Verification email sent — check your inbox')
 })
 
 // Logout
