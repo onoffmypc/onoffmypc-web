@@ -137,6 +137,17 @@ a { color: var(--accent); text-decoration: none; }
   display: none;
 }
 .error-msg.show { display: block; }
+.success-msg {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  color: #86efac;
+  font-size: 0.8rem;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+.success-msg.show { display: block; }
 
 .auth-switch { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
 
@@ -184,6 +195,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 .badge-online  { background: rgba(34,197,94,.15);  color: var(--green); }
 .badge-offline { background: rgba(136,136,136,.15); color: var(--muted); }
+.badge-pending { background: rgba(251,191,36,.15);  color: #fbbf24; }
 .badge-on      { background: rgba(34,197,94,.15);  color: var(--green); }
 .badge-off     { background: rgba(239,68,68,.15);   color: var(--red);   }
 

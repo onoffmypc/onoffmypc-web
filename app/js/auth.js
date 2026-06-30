@@ -5,6 +5,15 @@ const form = document.getElementById(isRegister ? 'register-form' : 'login-form'
 const errorEl = document.getElementById('error')
 const submitBtn = form.querySelector('button[type=submit]')
 
+// Show confirmation when redirected here after self-service account deletion
+if (!isRegister && new URLSearchParams(location.search).get('deleted') === '1') {
+  history.replaceState(null, '', '/login.html')
+  const notice = document.createElement('div')
+  notice.className = 'success-msg show'
+  notice.textContent = 'Your account has been deleted. Sorry to see you go.'
+  errorEl.after(notice)
+}
+
 function showError(msg) {
   errorEl.textContent = msg
   errorEl.classList.add('show')

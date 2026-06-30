@@ -3,7 +3,9 @@ if (!api.requireAuth()) throw new Error('unauthenticated')
 const params   = new URLSearchParams(location.search)
 const deviceId = params.get('id')
 
-if (!deviceId) location.replace('/dashboard.html')
+// Reject missing or malformed device IDs before making any API call
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+if (!deviceId || !UUID_RE.test(deviceId)) location.replace('/dashboard.html')
 
 // Load device name from API (not URL — URL param becomes stale after a rename)
 api.getDevice(deviceId).then(({ data, error }) => {
@@ -35,7 +37,18 @@ function fmtTime(iso) {
 }
 
 function cmdLabel(type) {
-  return { power_on: 'Power On', power_off: 'Power Off', reset: 'Reset' }[type] || type
+  return {
+    power_on: 'Power On',
+    power_off: 'Power Off',
+    power_off_force: 'Force Off',
+    reset: 'Reset',
+  }[type] || type
+}
+
+function statusBadgeClass(status) {
+  if (status === 'delivered') return 'badge-online'
+  if (status === 'expired')   return 'badge-offline'
+  return 'badge-pending'
 }
 
 async function load() {
@@ -98,25 +111,30 @@ function renderCommandsTable(rows) {
     <tr>
       <td>${fmtTime(r.created_at)}</td>
       <td>${cmdLabel(r.type)}</td>
-      <td><span class="badge ${r.status === 'delivered' ? 'badge-online' : 'badge-offline'}">${r.status}</span></td>
+      <td><span class="badge ${statusBadgeClass(r.status)}">${r.status}</span></td>
     </tr>`).join('')
 }
 
 async function sendCmd(type) {
-  const labels = { power_on: 'Power On', power_off: 'Power Off', reset: 'Reset' }
+  const label = cmdLabel(type)
+  if (type === 'power_off_force') {
+    const ok = window.confirm(`Force Off holds the power button for 6 seconds and cuts power immediately. Use only if normal Power Off has no effect. Continue?`)
+    if (!ok) return
+  }
   const { data, error } = await api.sendCommand(deviceId, type)
   if (error) { toast(error, 'error'); return }
   if (!data.delivered) {
-    toast(`${labels[type]}: device offline`, 'error')
+    toast(`${label}: device offline`, 'error')
   } else {
-    toast(`${labels[type]} command sent`)
+    toast(`${label} command sent`)
     setTimeout(load, 1500)
   }
 }
 
-document.getElementById('cmd-power-on').addEventListener('click',  () => sendCmd('power_on'))
-document.getElementById('cmd-power-off').addEventListener('click', () => sendCmd('power_off'))
-document.getElementById('cmd-reset').addEventListener('click',     () => sendCmd('reset'))
+document.getElementById('cmd-power-on').addEventListener('click',        () => sendCmd('power_on'))
+document.getElementById('cmd-power-off').addEventListener('click',       () => sendCmd('power_off'))
+document.getElementById('cmd-power-off-force').addEventListener('click', () => sendCmd('power_off_force'))
+document.getElementById('cmd-reset').addEventListener('click',           () => sendCmd('reset'))
 
 document.getElementById('logout-btn').addEventListener('click', () => {
   api.token.clear()

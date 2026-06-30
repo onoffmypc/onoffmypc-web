@@ -22,8 +22,14 @@
 </div>
 
 <script>
-  if (sessionStorage.getItem('admin_key')) {
+  const _key     = sessionStorage.getItem('admin_key')
+  const _expires = parseInt(sessionStorage.getItem('admin_key_expires') || '0', 10)
+  if (_key && Date.now() <= _expires) {
     location.replace('/admin/dashboard.html')
+  } else if (_key) {
+    // Key exists but has expired — clear it so the login form shows clean
+    sessionStorage.removeItem('admin_key')
+    sessionStorage.removeItem('admin_key_expires')
   }
 
   const input  = document.getElementById('key-input')
@@ -51,7 +57,9 @@
       return
     }
 
+    // Store key with a 24-hour expiry so stale sessions are evicted automatically
     sessionStorage.setItem('admin_key', key)
+    sessionStorage.setItem('admin_key_expires', String(Date.now() + 86400_000))
     location.replace('/admin/dashboard.html')
   }
 

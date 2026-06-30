@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-06-30
+
+### Added
+- Device detail page: **Force Off** button (sends `power_off_force` — holds power 6 s); shows confirm dialog before sending
+- Command history: `expired` status shown with amber badge; `pending` shown with amber badge; `delivered` stays green
+- `badge-pending` CSS class (amber) for in-progress command states in both app and admin views
+- `success-msg` CSS class for green informational banners (used after account deletion)
+- Login page: shows success banner when redirected from account deletion (`?deleted=1`)
+
+### Fixed
+- Device ID in URL (`?id=`) now validated as UUID before any API call — invalid IDs redirect to dashboard instead of making a 404 API call
+- Admin dashboard: load errors are now surfaced as toast notifications instead of silently leaving sections at "Loading…"
+- Admin session key: stored with a 24-hour expiry in sessionStorage; dashboard checks expiry on load and redirects to login if expired
+- Admin confirm dialog: renamed internal `confirm()` function to `confirmDialog()` so it no longer shadows `window.confirm`
+- Activity log in admin: `power_off_force` now labelled "Force Off"
+
 ## [0.6.0] - 2026-06-30
 
 ### Added

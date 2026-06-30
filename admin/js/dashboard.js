@@ -1,4 +1,13 @@
-if (!sessionStorage.getItem('admin_key')) location.replace('/admin/index.html')
+// Verify session key is present and hasn't expired (24h)
+;(function checkSession() {
+  const key     = sessionStorage.getItem('admin_key')
+  const expires = parseInt(sessionStorage.getItem('admin_key_expires') || '0', 10)
+  if (!key || Date.now() > expires) {
+    sessionStorage.removeItem('admin_key')
+    sessionStorage.removeItem('admin_key_expires')
+    location.replace('/admin/index.html')
+  }
+})()
 
 // ── Utilities ──────────────────────────────────────────────────────────────────
 
@@ -30,7 +39,7 @@ function isOnline(last_seen_at) {
 }
 
 function cmdLabel(type) {
-  return { power_on: 'Power On', power_off: 'Power Off', reset: 'Reset' }[type] ?? type
+  return { power_on: 'Power On', power_off: 'Power Off', power_off_force: 'Force Off', reset: 'Reset' }[type] ?? type
 }
 
 function toast(msg, type = 'success') {
@@ -43,7 +52,7 @@ function toast(msg, type = 'success') {
 
 // ── Confirm dialog ────────────────────────────────────────────────────────────
 
-function confirm(title, msg) {
+function confirmDialog(title, msg) {
   return new Promise((resolve) => {
     const modal = document.getElementById('confirm-modal')
     document.getElementById('confirm-title').textContent = title
@@ -119,20 +128,25 @@ function renderActivity(rows) {
     body.innerHTML = '<tr class="empty-row"><td colspan="5">No commands yet.</td></tr>'
     return
   }
-  body.innerHTML = rows.map(r => `
+  body.innerHTML = rows.map(r => {
+    let badgeClass = 'badge-offline'
+    if (r.status === 'delivered') badgeClass = 'badge-online'
+    else if (r.status === 'pending') badgeClass = 'badge-pending'
+    return `
     <tr>
       <td class="mono">${fmtDate(r.created_at)}</td>
       <td>${esc(r.user_email)}</td>
       <td>${esc(r.device_name)}</td>
       <td>${cmdLabel(r.type)}</td>
-      <td><span class="badge ${r.status === 'delivered' ? 'badge-online' : 'badge-pending'}">${esc(r.status)}</span></td>
-    </tr>`).join('')
+      <td><span class="badge ${badgeClass}">${esc(r.status)}</span></td>
+    </tr>`
+  }).join('')
 }
 
 // ── Actions ───────────────────────────────────────────────────────────────────
 
 async function deleteUser(id, email) {
-  const ok = await confirm('Delete User', `Delete ${email} and all their devices and data? This cannot be undone.`)
+  const ok = await confirmDialog('Delete User', `Delete ${email} and all their devices and data? This cannot be undone.`)
   if (!ok) return
   const { error } = await adminApi.deleteUser(id)
   if (error) { toast(error, 'error'); return }
@@ -141,7 +155,7 @@ async function deleteUser(id, email) {
 }
 
 async function deleteDevice(id, name) {
-  const ok = await confirm('Delete Device', `Delete "${name}" and all its telemetry and commands? This cannot be undone.`)
+  const ok = await confirmDialog('Delete Device', `Delete "${name}" and all its telemetry and commands? This cannot be undone.`)
   if (!ok) return
   const { error } = await adminApi.deleteDevice(id)
   if (error) { toast(error, 'error'); return }
@@ -158,6 +172,15 @@ async function load() {
     adminApi.devices(),
     adminApi.activity(),
   ])
+
+  // Surface load errors rather than silently leaving sections at "Loading…"
+  const errors = [statsRes, usersRes, devicesRes, activityRes]
+    .map(r => r.error)
+    .filter(Boolean)
+
+  if (errors.length) {
+    toast(errors[0], 'error')
+  }
 
   if (statsRes.data)    renderStats(statsRes.data)
   if (usersRes.data)    renderUsers(usersRes.data)
