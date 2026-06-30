@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — OnOffMyPC</title>
+  <link rel="stylesheet" href="/admin/css/admin.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">OnOffMyPC <span class="nav-badge">Admin</span></span>
+  <div class="nav-right">
+    <span class="nav-env" id="nav-env"></span>
+    <button class="btn btn-ghost btn-sm" id="signout-btn">Sign out</button>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- Stats -->
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value" id="s-users">—</div></div>
+    <div class="stat-card"><div class="stat-label">Total Devices</div><div class="stat-value" id="s-devices">—</div></div>
+    <div class="stat-card"><div class="stat-label">Online Now</div><div class="stat-value green" id="s-online">—</div></div>
+    <div class="stat-card"><div class="stat-label">Commands Today</div><div class="stat-value yellow" id="s-cmds">—</div></div>
+    <div class="stat-card"><div class="stat-label">Telemetry Today</div><div class="stat-value" id="s-tel">—</div></div>
+  </div>
+
+  <!-- Users -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Users</h2>
+      <span class="section-count" id="users-count"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Joined</th>
+            <th>Devices</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="users-body">
+          <tr class="empty-row"><td colspan="4">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Devices -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Devices</h2>
+      <span class="section-count" id="devices-count"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Status</th>
+            <th>Last Seen</th>
+            <th>Firmware</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="devices-body">
+          <tr class="empty-row"><td colspan="6">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Activity -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Recent Commands</h2>
+      <span class="section-count">last 100</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>User</th>
+            <th>Device</th>
+            <th>Command</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="activity-body">
+          <tr class="empty-row"><td colspan="5">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<!-- Confirm modal -->
+<div id="confirm-modal" class="modal-backdrop" style="display:none">
+  <div class="modal">
+    <h3 id="confirm-title">Confirm</h3>
+    <p id="confirm-msg"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="confirm-cancel">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="/admin/js/api.js"></script>
+<script src="/admin/js/dashboard.js"></script>
+</body>
+</html>

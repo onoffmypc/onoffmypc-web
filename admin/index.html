@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — OnOffMyPC</title>
+  <link rel="stylesheet" href="/admin/css/admin.css" />
+</head>
+<body>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <h1>OnOffMyPC <span class="nav-badge">Admin</span></h1>
+    <p>Enter your admin key to continue.</p>
+    <div id="error" class="error-msg"></div>
+    <div class="field">
+      <label>Admin Key</label>
+      <input type="password" id="key-input" placeholder="••••••••••••••••" autocomplete="current-password" />
+    </div>
+    <button class="btn btn-primary btn-full" id="login-btn">Sign in</button>
+  </div>
+</div>
+
+<script>
+  if (sessionStorage.getItem('admin_key')) {
+    location.replace('/admin/dashboard.html')
+  }
+
+  const input  = document.getElementById('key-input')
+  const errEl  = document.getElementById('error')
+  const btn    = document.getElementById('login-btn')
+
+  async function tryLogin() {
+    const key = input.value.trim()
+    if (!key) return
+    btn.disabled = true
+    btn.textContent = 'Verifying…'
+    errEl.classList.remove('show')
+
+    const res = await fetch('https://api.onoffmypc.com/admin/stats', {
+      headers: { 'Authorization': `Bearer ${key}` }
+    }).catch(() => null)
+
+    btn.disabled = false
+    btn.textContent = 'Sign in'
+
+    if (!res || res.status === 401) {
+      errEl.textContent = 'Invalid admin key.'
+      errEl.classList.add('show')
+      input.select()
+      return
+    }
+
+    sessionStorage.setItem('admin_key', key)
+    location.replace('/admin/dashboard.html')
+  }
+
+  btn.addEventListener('click', tryLogin)
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryLogin() })
+  input.focus()
+</script>
+
+</body>
+</html>

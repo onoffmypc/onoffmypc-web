@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-06-30
+
+### Added
+- `admin/` — admin panel at `admin.onoffmypc.com`: login page, dashboard with system stats, users table, devices table, recent commands log; delete user and delete device actions with confirmation
+- CSP (`Content-Security-Policy`) header for `/app/*` and `/admin/*` routes
+- `Strict-Transport-Security` (HSTS) header with 2-year max-age and preload
+- `Permissions-Policy` header restricting camera, microphone, geolocation, and USB
+
+### Changed
+- `X-Robots-Tag: noindex, nofollow` added for all `/admin/*` routes
+
 ## [0.3.0] - 2026-06-30
 
 ### Changed
