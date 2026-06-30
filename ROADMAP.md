@@ -19,6 +19,7 @@ Bugs are marked **[BUG]**, security issues **[SEC]**, missing features **[FEAT]*
 - **[BUG]** Inline `style="..."` attributes on multiple pages blocked by `style-src-attr` CSP. **Fixed** — replaced all inline styles with utility CSS classes.
 - **[BUG]** `onclick="..."` HTML attributes and JS-generated `innerHTML` with inline event handlers blocked by `script-src-attr` CSP. **Fixed** — replaced with `data-action` attributes and event delegation on parent containers.
 - **[BUG]** Password show/hide toggle wired via `onclick="..."` HTML attribute on login, register, and reset-password pages — blocked by CSP. **Fixed** — `ui.js` now auto-wires all `.pass-eye` buttons via `querySelectorAll` + `addEventListener` on load.
+- **[BUG]** `device.js` continued executing after `location.replace()` when the `?id=` param was missing/invalid, firing an API call with a bad id before navigation completed. **Fixed 2026-06-30** — now throws to halt the script after redirecting.
 
 ---
 
@@ -28,6 +29,10 @@ Bugs are marked **[BUG]**, security issues **[SEC]**, missing features **[FEAT]*
 - **[BUG]** No success feedback after register form submits — `auth.js` immediately calls `api.login()` and redirects; if the auto-login fails, the user is dropped on `/login.html` with no explanation. Should show an error toast if the auto-login fails.
 - **[BUG]** `app/login.html` has a `<div id="success" class="success-msg">` element that is never shown — intended for post-reset redirect message but no code reads a query param to show it. Either wire it up or remove it.
 - **[BUG]** `setup.html` links to `https://app.onoffmypc.com` (root) in step 2, which redirects to dashboard or login. The link should go directly to `https://app.onoffmypc.com/dashboard.html` for clarity.
+- **[BUG]** Destructive actions on the dashboard and device pages use the native `window.confirm()` (`dashboard.js`, `device.js`), inconsistent with the styled modal used on the account page and easy to mis-click. Replace with the shared styled confirm modal.
+- **[BUG]** Dashboard status is fetched per-device — `fetchStatus()` makes one telemetry API call for every device on load and again every 30 s (N+1). With 10 devices that's 10 calls per refresh. Needs a single batched status endpoint (depends on the backend `GET /devices/:id/status` / bulk-status feature).
+- **[BUG]** `app/index.html` → `init.js` redirects on the mere presence of a `token` in localStorage without checking expiry — an expired token routes to the dashboard, which then 401s and bounces to login (double redirect). Validate token expiry (decode `exp`) before redirecting.
+- **[BUG]** Copy buttons in the device-token reveal modal change their label on click but never reset back to "Copy".
 
 ---
 

@@ -3,9 +3,13 @@ if (!api.requireAuth()) throw new Error('unauthenticated')
 const params   = new URLSearchParams(location.search)
 const deviceId = params.get('id')
 
-// Reject missing or malformed device IDs before making any API call
+// Reject missing or malformed device IDs before making any API call.
+// Stop script execution after redirecting so no API call fires with a bad id.
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-if (!deviceId || !UUID_RE.test(deviceId)) location.replace('/dashboard.html')
+if (!deviceId || !UUID_RE.test(deviceId)) {
+  location.replace('/dashboard.html')
+  throw new Error('invalid device id')
+}
 
 // Load device name from API (not URL — URL param becomes stale after a rename)
 api.getDevice(deviceId).then(({ data, error }) => {

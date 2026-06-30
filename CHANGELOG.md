@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-06-30
+
+### Fixed
+- Device detail page (`device.js`) kept executing after redirecting away on a missing/invalid `?id=` param, firing an API call with a bad id before navigation completed — now halts the script after redirect. Bumped `device.js` to `?v=3`.
+
 ## [1.1.0] - 2026-06-30
 
 ### Fixed
