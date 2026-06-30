@@ -54,20 +54,21 @@ function toast(msg, type = 'success') {
 
 function confirmDialog(title, msg) {
   return new Promise((resolve) => {
-    const modal = document.getElementById('confirm-modal')
+    const modal     = document.getElementById('confirm-modal')
+    const okBtn     = document.getElementById('confirm-ok')
+    const cancelBtn = document.getElementById('confirm-cancel')
+
     document.getElementById('confirm-title').textContent = title
     document.getElementById('confirm-msg').textContent   = msg
     modal.style.display = 'flex'
 
     function cleanup(result) {
       modal.style.display = 'none'
-      document.getElementById('confirm-ok').onclick     = null
-      document.getElementById('confirm-cancel').onclick = null
       resolve(result)
     }
 
-    document.getElementById('confirm-ok').onclick     = () => cleanup(true)
-    document.getElementById('confirm-cancel').onclick = () => cleanup(false)
+    okBtn.addEventListener('click',     () => cleanup(true),  { once: true })
+    cancelBtn.addEventListener('click', () => cleanup(false), { once: true })
   })
 }
 
