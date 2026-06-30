@@ -71,7 +71,7 @@ Bugs are marked **[BUG]**, security issues **[SEC]**, missing features **[FEAT]*
 ## Improvements
 
 ### Marketing
-- **[IMPROVE]** The `setup.html` notice says "A one-click flashing tool is coming soon" — should link to ESP Web Tools directly or embed it.
+- **[IMPROVE]** ~~The `setup.html` notice says "A one-click flashing tool is coming soon"~~ **Done 2026-06-30** — ESP Web Tools embedded (vendored) on the setup page; one-click USB flashing in Chrome/Edge desktop with a manual esptool fallback for other browsers. Future: automate manifest/binary refresh on each firmware release (Phase 2), and consider Improv Wi-Fi provisioning (Phase 3).
 - **[IMPROVE]** No `<link rel="canonical">` on marketing pages — may cause duplicate content issues.
 - **[IMPROVE]** Footer copyright year is hardcoded as `2026` — will need updating.
 

@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-06-30
+
+### Added
+- One-click browser flashing on the setup page via ESP Web Tools (vendored at `/vendor/esp-web-tools/`). In Chrome or Edge on desktop, users can flash the ESP32 over USB directly from `onoffmypc.com/setup` — no software to install. Other browsers see a fallback message plus the manual esptool instructions. Adds `/firmware/manifest.json` and the merged v1.2.0 binary served same-origin.
+
+### Changed
+- Setup page: replaced the "one-click flashing tool is coming soon" notice with the live flasher in step 4.
+
 ## [1.2.1] - 2026-06-30
 
 ### Fixed

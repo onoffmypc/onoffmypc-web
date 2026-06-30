@@ -27,12 +27,8 @@
 
   <div class="setup-steps">
     <div class="notice">
-      <strong>Early access:</strong> A one-click flashing tool is coming soon.
-      For now, flash the firmware with
-      <a href="https://esphome.github.io/esp-web-tools/" target="_blank" rel="noopener">ESP Web Tools</a>
-      or the <a href="https://docs.espressif.com/projects/esptool/en/latest/" target="_blank" rel="noopener">esptool CLI</a>.
-      Download the latest <code>.bin</code> from the
-      <a href="https://github.com/onoffmypc/onoffmypc-firmware-release/releases" target="_blank" rel="noopener">firmware releases page</a>.
+      <strong>Tip:</strong> using <strong>Chrome or Edge on desktop</strong> you can flash your device
+      in one click, straight from this page — see step 4. No software to install.
     </div>
 
     <div class="step">
@@ -76,7 +72,21 @@
       <div class="step-body">
         <h3>Flash the firmware</h3>
         <p>
-          Connect the ESP32 to your computer via USB and flash the firmware.
+          Connect the ESP32 to your computer via USB. In <strong>Chrome or Edge on desktop</strong>,
+          click below to flash it directly from your browser — choose the serial port for your board when prompted.
+        </p>
+        <esp-web-install-button manifest="/firmware/manifest.json">
+          <button slot="activate" class="btn-primary">⚡ Flash with one click</button>
+          <span slot="unsupported" class="flash-note">Your browser can't flash devices — use Chrome or Edge on desktop, or flash manually (below).</span>
+          <span slot="not-allowed" class="flash-note">Flashing requires a secure (HTTPS) connection.</span>
+        </esp-web-install-button>
+        <p class="flash-fallback">
+          Prefer to flash manually? Download the latest <code>.bin</code> from the
+          <a href="https://github.com/onoffmypc/onoffmypc-firmware-release/releases" target="_blank" rel="noopener">firmware releases page</a>
+          and use the <a href="https://docs.espressif.com/projects/esptool/en/latest/" target="_blank" rel="noopener">esptool CLI</a>:
+          <br><code>esptool.py --chip esp32 write_flash 0x0 onoffmypc-firmware-&lt;version&gt;.bin</code>
+        </p>
+        <p>
           Once flashed, the device will boot and — if no configuration is stored yet —
           create a Wi-Fi network named <strong>OnOffMyPC-XXXXXX</strong> (last 3 bytes of its MAC).
         </p>
@@ -137,5 +147,6 @@
   </div>
 </footer>
 
+<script type="module" src="/vendor/esp-web-tools/install-button.js"></script>
 </body>
 </html>
