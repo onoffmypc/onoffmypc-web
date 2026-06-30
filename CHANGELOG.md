@@ -2,17 +2,27 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-06-30
+
+### Fixed
+- Inline `<script>` blocks on five app pages blocked by `script-src 'self'` CSP — extracted to external JS files (`init.js`, `verify-email.js`, `forgot-password.js`, `reset-password.js`)
+- Cloudflare analytics beacon blocked by CSP — added the analytics domain to `script-src` in `app/_headers`
+- Same-origin RUM endpoint blocked by CSP because `connect-src` was missing `'self'` — fixed
+- Inline `style="..."` attributes across multiple pages blocked by `style-src-attr` CSP — replaced with utility CSS classes
+- `onclick="..."` HTML attributes and inline event handlers in JS-generated HTML blocked by `script-src-attr` CSP — replaced with `data-action` attributes and event delegation
+- Password show/hide toggle was wired via `onclick` HTML attribute on login, register, and reset-password pages — blocked by CSP; now auto-wired via `querySelectorAll` in `ui.js`
+- Bumped `app.css` to `?v=3` and JS files to `?v=2` to force re-fetch of updated assets
+
 ## [1.0.0] - 2026-06-30
 
 ### Added
 - Force Off button on each device card on the dashboard (was only on the device detail page); includes confirm dialog
-- Security headers (`_headers`) added to `app/` and `admin/` deployments: CSP, HSTS, X-Frame-Options, X-Robots-Tag noindex
-- `ROADMAP.md` added to all three repos (web, backend, firmware) with complete audit of bugs, security gaps, and missing features
+- Security headers (`_headers`) added to the app deployment: CSP, HSTS, X-Frame-Options, X-Robots-Tag noindex
+- `ROADMAP.md` added to the repo with a full audit of bugs, security gaps, and missing features
 
 ### Fixed
 - "Get Started" and register links on marketing pages pointed to `/register` (no extension) which 404'd — now correctly link to `/register.html`
-- Admin dashboard had an unused `nav-env` element that was never populated — removed
-- Root `_headers` had stale `/app/*` and `/admin/*` rules that applied to the wrong deployment — cleaned up
+- Root `_headers` had stale path rules that applied to the wrong deployment — cleaned up
 
 ## [0.9.0] - 2026-06-30
 
@@ -40,16 +50,12 @@
 ### Added
 - Device detail page: **Force Off** button (sends `power_off_force` — holds power 6 s); shows confirm dialog before sending
 - Command history: `expired` status shown with amber badge; `pending` shown with amber badge; `delivered` stays green
-- `badge-pending` CSS class (amber) for in-progress command states in both app and admin views
+- `badge-pending` CSS class (amber) for in-progress command states
 - `success-msg` CSS class for green informational banners (used after account deletion)
 - Login page: shows success banner when redirected from account deletion (`?deleted=1`)
 
 ### Fixed
 - Device ID in URL (`?id=`) now validated as UUID before any API call — invalid IDs redirect to dashboard instead of making a 404 API call
-- Admin dashboard: load errors are now surfaced as toast notifications instead of silently leaving sections at "Loading…"
-- Admin session key: stored with a 24-hour expiry in sessionStorage; dashboard checks expiry on load and redirects to login if expired
-- Admin confirm dialog: renamed internal `confirm()` function to `confirmDialog()` so it no longer shadows `window.confirm`
-- Activity log in admin: `power_off_force` now labelled "Force Off"
 
 ## [0.6.0] - 2026-06-30
 
@@ -58,29 +64,23 @@
 - Account link added to nav in dashboard and device detail pages
 
 ### Fixed
-- Device detail page was reading device name from URL `?name=` param — now fetched from `GET /devices/:id` API so name stays accurate after a rename
+- Device detail page was reading device name from URL `?name=` param — now fetched from the API so name stays accurate after a rename
 - `openAddModal()` was not clearing Device ID / Token fields on re-open, showing stale credentials from a previous session
 
 ## [0.5.0] - 2026-06-30
 
 ### Added
-- Admin panel now includes "Create User" form — invite users without open registration
 - Register page now includes invite code field; subtitle updated to "Early access — invite code required"
 
 ### Changed
-- Removed backend technology names (Cloudflare, Workers, D1, SQLite, WebSocket) from `about.html` and `privacy-policy.html` — replaced with neutral wording
-- `about.html` meta description no longer mentions Cloudflare
+- Removed backend technology names from `about.html` and `privacy-policy.html` — replaced with neutral wording
+- `about.html` meta description updated
 
 ## [0.4.0] - 2026-06-30
 
 ### Added
-- `admin/` — admin panel at `admin.onoffmypc.com`: login page, dashboard with system stats, users table, devices table, recent commands log; delete user and delete device actions with confirmation
-- CSP (`Content-Security-Policy`) header for `/app/*` and `/admin/*` routes
 - `Strict-Transport-Security` (HSTS) header with 2-year max-age and preload
 - `Permissions-Policy` header restricting camera, microphone, geolocation, and USB
-
-### Changed
-- `X-Robots-Tag: noindex, nofollow` added for all `/admin/*` routes
 
 ## [0.3.0] - 2026-06-30
 
