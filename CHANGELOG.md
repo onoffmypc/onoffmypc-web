@@ -5,7 +5,9 @@
 ## [0.3.0] - 2026-06-30
 
 ### Changed
-- Setup guide rewritten to reflect captive portal provisioning flow: added steps for finding PC MAC address, connecting to the OnOffMyPC setup AP, and using the browser setup page at `http://192.168.4.1`; removed references to editing `config.h`
+- Setup guide (`setup.html`) rewritten for captive portal provisioning: added steps for finding PC MAC address, connecting to the OnOffMyPC-XXXXXX AP, and using the browser setup page at `http://192.168.4.1`; removed references to editing `config.h`
+- Add Device modal now shows both Device ID and Token after creation, each with its own Copy button
+- Setup guide inside the modal updated to match the captive portal flow (flash → connect to AP → fill setup page → wire up)
 
 ## [0.2.0] - 2026-06-29
 
