@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-07-01
+
+### Added
+- **Light & dark mode** across marketing, app, and admin. Follows the OS `prefers-color-scheme` by default and remembers a manual choice via a floating toggle (`theme.js`, injected in `<head>` so the theme is set before paint — no flash). A light palette was added to all three stylesheets via `[data-theme="light"]` overrides. Bumped `style.css?v=1`, `app.css?v=6`, `admin.css?v=5`.
+
 ## [1.7.0] - 2026-07-01
 
 ### Added
