@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Device — OnOffMyPC</title>
-  <link rel="stylesheet" href="/css/app.css?v=6" />
+  <link rel="stylesheet" href="/css/app.css?v=7" />
   <script src="/js/theme.js?v=1"></script>
 </head>
 <body>
@@ -12,7 +12,10 @@
 <nav class="app-nav">
   <div class="app-nav-inner">
     <span class="app-logo">OnOffMyPC</span>
-    <div class="nav-actions">
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-actions">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="nav-actions" id="nav-actions">
       <a href="/account.html" class="btn btn-ghost btn-sm">Account</a>
       <button class="btn btn-ghost btn-sm" id="logout-btn">Sign out</button>
     </div>
@@ -106,6 +109,8 @@
 <div class="toast-wrap" id="toast-wrap"></div>
 
 <script src="/js/api.js?v=8"></script>
-<script src="/js/device.js?v=6"></script>
+<script src="/js/nav.js?v=1"></script>
+<script src="/js/confirm.js?v=1"></script>
+<script src="/js/device.js?v=7"></script>
 </body>
 </html>

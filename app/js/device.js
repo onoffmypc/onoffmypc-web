@@ -168,7 +168,12 @@ function renderChart(rows) {
 async function sendCmd(type) {
   const label = cmdLabel(type)
   if (type === 'power_off_force') {
-    const ok = window.confirm(`Force Off holds the power button for 6 seconds and cuts power immediately. Use only if normal Power Off has no effect. Continue?`)
+    const ok = await confirmDialog({
+      title: 'Force Off?',
+      message: 'Force Off holds the power button for 6 seconds and cuts power immediately. Use only if normal Power Off has no effect.',
+      confirmLabel: 'Force Off',
+      danger: true,
+    })
     if (!ok) return
   }
   const { data, error } = await api.sendCommand(deviceId, type)

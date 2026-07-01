@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-07-01
+
+### Added
+- **Mobile hamburger nav** on the app pages (dashboard, device, account). Nav actions collapse into a dropdown toggle below 600px instead of sitting inline (`nav.js`, `app.css?v=7`).
+- **Shared styled confirm dialog** (`confirm.js`) — replaces the native `window.confirm()` used for device delete and Force Off on the dashboard and device pages, matching the account page's modal styling. Bumped `dashboard.js?v=6`, `device.js?v=7`.
+- **Favicon** (`favicon.svg`) and **Open Graph / Twitter Card meta tags** across all marketing pages, with a generated social preview image (`og-image.png`, 1200×630). Bumped `style.css?v=2`.
+
+### Changed
+- Dashboard device cards lay control buttons out in an even 2×2 grid instead of wrapping 3 + 1.
+- Device page: scheduled-command rows are constrained to a readable width so the cancel action sits next to its entry rather than at the far page edge.
+- Marketing hero: tightened the vertical spacing between the hero and the feature grid.
+
 ## [1.8.0] - 2026-07-01
 
 ### Added

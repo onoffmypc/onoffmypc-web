@@ -89,7 +89,13 @@ function deviceCard(d) {
 async function sendCmd(deviceId, type) {
   const labels = { power_on: 'Power On', power_off: 'Power Off', power_off_force: 'Force Off', reset: 'Reset' }
   if (type === 'power_off_force') {
-    if (!confirm('Force Off holds the power button for 6 seconds and cuts power immediately. Use only if normal Power Off has no effect. Continue?')) return
+    const ok = await confirmDialog({
+      title: 'Force Off?',
+      message: 'Force Off holds the power button for 6 seconds and cuts power immediately. Use only if normal Power Off has no effect.',
+      confirmLabel: 'Force Off',
+      danger: true,
+    })
+    if (!ok) return
   }
   const { data, error } = await api.sendCommand(deviceId, type)
   if (error) { toast(error, 'error'); return }
@@ -101,7 +107,13 @@ async function sendCmd(deviceId, type) {
 }
 
 async function deleteDevice(id, name) {
-  if (!confirm(`Delete "${name}"? This cannot be undone.`)) return
+  const ok = await confirmDialog({
+    title: 'Delete device?',
+    message: `"${name}" will be removed permanently. This cannot be undone.`,
+    confirmLabel: 'Delete',
+    danger: true,
+  })
+  if (!ok) return
   const { error } = await api.deleteDevice(id)
   if (error) { toast(error, 'error'); return }
   toast('Device removed')
