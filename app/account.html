@@ -44,6 +44,28 @@
     </div>
   </div>
 
+  <!-- Security -->
+  <div class="settings-section">
+    <h2 class="settings-heading">Security</h2>
+    <div class="settings-card">
+      <div id="pw-error" class="error-msg"></div>
+      <div id="pw-success" class="success-msg"></div>
+      <div class="field">
+        <label for="cur-pw">Current password</label>
+        <input type="password" id="cur-pw" autocomplete="current-password" />
+      </div>
+      <div class="field">
+        <label for="new-pw">New password</label>
+        <input type="password" id="new-pw" autocomplete="new-password" placeholder="At least 8 characters" />
+      </div>
+      <div class="field">
+        <label for="confirm-pw">Confirm new password</label>
+        <input type="password" id="confirm-pw" autocomplete="new-password" />
+      </div>
+      <button class="btn btn-primary btn-sm" id="change-pw-btn">Change password</button>
+    </div>
+  </div>
+
   <!-- Danger zone -->
   <div class="settings-section danger-section">
     <h2 class="settings-heading danger-heading">Danger Zone</h2>
@@ -85,6 +107,6 @@
 <div class="toast-wrap" id="toast-wrap"></div>
 
 <script src="/js/api.js?v=6"></script>
-<script src="/js/account.js?v=4"></script>
+<script src="/js/account.js?v=5"></script>
 </body>
 </html>

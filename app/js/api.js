@@ -41,6 +41,7 @@ const api = {
   resetPassword:  (token, password)              => apiReq('POST',   '/auth/reset-password',  { token, password }),
   verifyEmail:    (token)                        => apiReq('GET',    `/auth/verify-email?token=${encodeURIComponent(token)}`),
   resendVerify:   ()                             => apiReq('POST',   '/auth/resend-verify'),
+  changePassword: (current_password, new_password) => apiReq('POST', '/auth/change-password', { current_password, new_password }),
   devices:        ()                             => apiReq('GET',    '/devices'),
   getDevice:      (id)                           => apiReq('GET',    `/devices/${id}`),
   deviceStatus:   (id)                           => apiReq('GET',    `/devices/${id}/status`),

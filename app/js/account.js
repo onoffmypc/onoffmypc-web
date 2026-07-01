@@ -35,6 +35,30 @@ document.getElementById('resend-verify-btn').addEventListener('click', async (e)
   toast('Verification email sent — check your inbox')
 })
 
+// Change password
+document.getElementById('change-pw-btn').addEventListener('click', async (e) => {
+  const btn     = e.currentTarget
+  const errEl   = document.getElementById('pw-error')
+  const okEl    = document.getElementById('pw-success')
+  const cur     = document.getElementById('cur-pw')
+  const next    = document.getElementById('new-pw')
+  const confirm = document.getElementById('confirm-pw')
+  errEl.classList.remove('show'); okEl.classList.remove('show')
+
+  if (!cur.value || !next.value) { errEl.textContent = 'Enter your current and new password.'; errEl.classList.add('show'); return }
+  if (next.value.length < 8)      { errEl.textContent = 'New password must be at least 8 characters.'; errEl.classList.add('show'); return }
+  if (next.value !== confirm.value) { errEl.textContent = 'New passwords do not match.'; errEl.classList.add('show'); return }
+
+  btn.disabled = true; btn.textContent = 'Saving…'
+  const { error } = await api.changePassword(cur.value, next.value)
+  btn.disabled = false; btn.textContent = 'Change password'
+
+  if (error) { errEl.textContent = error; errEl.classList.add('show'); return }
+  cur.value = ''; next.value = ''; confirm.value = ''
+  okEl.textContent = 'Password changed. Other devices have been signed out.'
+  okEl.classList.add('show')
+})
+
 // Logout
 document.getElementById('logout-btn').addEventListener('click', async () => {
   await api.logout()
