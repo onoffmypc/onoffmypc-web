@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-07-01
+
+### Fixed
+- Login redirect loop: the `apiReq` auth-page check only matched `.html` paths, but Cloudflare Pages serves clean URLs (`/login`), so a 401 on `/login` redirected to `/login.html` → 308 → `/login` → loop. The check now matches both clean and `.html` forms. Bumped `api.js` to `?v=5`.
+
 ## [1.4.0] - 2026-07-01
 
 ### Changed

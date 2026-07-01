@@ -4,7 +4,9 @@ const API_BASE = 'https://api.onoffmypc.com'
 // never readable or stored by page JS. Requests opt into sending it with
 // credentials:'include'. Pages that require auth are gated by the 401 handler
 // below rather than a client-side token check.
-const AUTH_PAGES = /\/(login|register|forgot-password|reset-password|verify-email)\.html$/
+// Match both clean URLs (/login) and .html (/login.html) — Cloudflare Pages serves
+// the clean form, so location.pathname is usually extensionless.
+const AUTH_PAGES = /\/(login|register|forgot-password|reset-password|verify-email)(\.html)?$/
 
 async function apiReq(method, path, body) {
   try {
