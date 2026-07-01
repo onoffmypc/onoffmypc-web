@@ -1,4 +1,4 @@
-if (api.token.get()) location.replace('/dashboard.html')
+api.me().then(({ data }) => { if (data) location.replace('/dashboard.html') })
 
 const token     = new URLSearchParams(location.search).get('token')
 const form      = document.getElementById('reset-form')

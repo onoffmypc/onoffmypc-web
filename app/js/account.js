@@ -36,8 +36,8 @@ document.getElementById('resend-verify-btn').addEventListener('click', async (e)
 })
 
 // Logout
-document.getElementById('logout-btn').addEventListener('click', () => {
-  api.token.clear()
+document.getElementById('logout-btn').addEventListener('click', async () => {
+  await api.logout()
   location.replace('/login.html')
 })
 
@@ -77,6 +77,6 @@ document.getElementById('delete-confirm').addEventListener('click', async () => 
     return
   }
 
-  api.token.clear()
+  await api.logout()
   location.replace('/login.html?deleted=1')
 })

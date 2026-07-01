@@ -221,8 +221,8 @@ document.getElementById('done-btn').addEventListener('click', () => {
   document.getElementById('add-modal').style.display = 'none'
 })
 
-document.getElementById('logout-btn').addEventListener('click', () => {
-  api.token.clear()
+document.getElementById('logout-btn').addEventListener('click', async () => {
+  await api.logout()
   location.replace('/login.html')
 })
 

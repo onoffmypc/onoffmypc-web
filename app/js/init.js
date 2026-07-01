@@ -1,5 +1,4 @@
-if (localStorage.getItem('token')) {
-  location.replace('/dashboard.html')
-} else {
-  location.replace('/login.html')
-}
+// Route to the dashboard if a valid session cookie exists, otherwise to login.
+api.me().then(({ data }) => {
+  location.replace(data ? '/dashboard.html' : '/login.html')
+})

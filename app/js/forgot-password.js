@@ -1,4 +1,4 @@
-if (api.token.get()) location.replace('/dashboard.html')
+api.me().then(({ data }) => { if (data) location.replace('/dashboard.html') })
 
 const form      = document.getElementById('forgot-form')
 const errorEl   = document.getElementById('error')

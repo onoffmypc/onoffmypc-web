@@ -22,6 +22,7 @@
   } else {
     successEl.textContent = 'Email confirmed! Redirecting…'
     successEl.classList.add('show')
-    setTimeout(() => location.replace(api.token.get() ? '/dashboard.html' : '/login.html'), 2000)
+    const { data } = await api.me()
+    setTimeout(() => location.replace(data ? '/dashboard.html' : '/login.html'), 2000)
   }
 })()

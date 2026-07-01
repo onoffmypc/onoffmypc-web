@@ -140,8 +140,8 @@ document.getElementById('cmd-power-off').addEventListener('click',       () => s
 document.getElementById('cmd-power-off-force').addEventListener('click', () => sendCmd('power_off_force'))
 document.getElementById('cmd-reset').addEventListener('click',           () => sendCmd('reset'))
 
-document.getElementById('logout-btn').addEventListener('click', () => {
-  api.token.clear()
+document.getElementById('logout-btn').addEventListener('click', async () => {
+  await api.logout()
   location.replace('/login.html')
 })
 

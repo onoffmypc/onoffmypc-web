@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-07-01
+
+### Changed
+- App now authenticates via the API's HttpOnly `session` cookie instead of a JWT in `localStorage` (XSS hardening). `api.js` sends `credentials:'include'` and no longer stores or reads a token; login/register rely on the cookie set by the API; logout and account-deletion call `POST /auth/logout` to clear it. Auth-state checks (already-signed-in redirects, page gating) now use `/auth/me` and the 401 handler. Bumped affected JS to `?v=4`.
+
 ## [1.3.0] - 2026-06-30
 
 ### Added

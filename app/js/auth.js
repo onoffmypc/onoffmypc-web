@@ -1,4 +1,5 @@
-if (api.token.get()) location.replace('/dashboard.html')
+// If already signed in (valid session cookie), skip straight to the dashboard.
+api.me().then(({ data }) => { if (data) location.replace('/dashboard.html') })
 
 const isRegister = !!document.getElementById('register-form')
 const form = document.getElementById(isRegister ? 'register-form' : 'login-form')
@@ -39,17 +40,16 @@ form.addEventListener('submit', async (e) => {
     const inviteCode = (document.getElementById('invite-code')?.value ?? '').trim()
     const { error } = await api.register(email, password, inviteCode)
     if (error) { showError(error); setLoading(false); return }
-    const { data, error: loginErr } = await api.login(email, password)
+    // Registration succeeded; sign in to set the session cookie.
+    const { error: loginErr } = await api.login(email, password)
     if (loginErr) { location.replace('/login.html'); return }
-    api.token.set(data.token)
   } else {
-    const { data, error } = await api.login(email, password)
+    const { error } = await api.login(email, password)
     if (error) {
       showError(error === 'invalid credentials' ? 'Invalid email or password.' : error)
       setLoading(false)
       return
     }
-    api.token.set(data.token)
   }
 
   location.replace('/dashboard.html')

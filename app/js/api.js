@@ -1,26 +1,25 @@
 const API_BASE = 'https://api.onoffmypc.com'
 
-function getToken() { return localStorage.getItem('token') }
-function setToken(t) { localStorage.setItem('token', t) }
-function clearAuth() { localStorage.removeItem('token') }
-
-function requireAuth() {
-  if (!getToken()) { location.replace('/login.html'); return false }
-  return true
-}
+// Auth is a HttpOnly `session` cookie set by the API on login — the token is
+// never readable or stored by page JS. Requests opt into sending it with
+// credentials:'include'. Pages that require auth are gated by the 401 handler
+// below rather than a client-side token check.
+const AUTH_PAGES = /\/(login|register|forgot-password|reset-password|verify-email)\.html$/
 
 async function apiReq(method, path, body) {
-  const headers = { 'Content-Type': 'application/json' }
-  const t = getToken()
-  if (t) headers['Authorization'] = `Bearer ${t}`
   try {
     const res = await fetch(API_BASE + path, {
       method,
-      headers,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: body !== undefined ? JSON.stringify(body) : undefined,
     })
-    if (res.status === 401) { clearAuth(); location.replace('/login.html'); return { error: 'unauthorized' } }
-    const data = await res.json()
+    // No/expired session on a protected page → send them to sign in.
+    if (res.status === 401 && !AUTH_PAGES.test(location.pathname)) {
+      location.replace('/login.html')
+      return { error: 'unauthorized' }
+    }
+    const data = await res.json().catch(() => ({}))
     if (!res.ok) return { error: data.error || 'request failed' }
     return { data }
   } catch {
@@ -29,10 +28,11 @@ async function apiReq(method, path, body) {
 }
 
 const api = {
-  token: { get: getToken, set: setToken, clear: clearAuth },
-  requireAuth,
+  // Real gating happens via the 401 handler in apiReq; kept for callers.
+  requireAuth: () => true,
   login:          (email, password)              => apiReq('POST',   '/auth/login',          { email, password }),
   register:       (email, password, invite_code) => apiReq('POST',   '/auth/register',       { email, password, invite_code }),
+  logout:         ()                             => apiReq('POST',   '/auth/logout'),
   me:             ()                             => apiReq('GET',    '/auth/me'),
   deleteAccount:  ()                             => apiReq('DELETE', '/auth/account'),
   forgotPassword: (email)                        => apiReq('POST',   '/auth/forgot-password', { email }),
