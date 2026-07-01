@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-07-01
+
+### Changed
+- Dashboard no longer makes a telemetry request per device (N+1 removed): device status now comes from the enhanced `GET /devices` response (latest `pc_on` + `last_seen_at`), and the 30s refresh is a single call that updates badges in place. Bumped `api.js?v=6`, `dashboard.js?v=5`.
+- Device detail page shows online/offline from the accurate `GET /devices/:id/status` (Durable Object presence) instead of inferring from telemetry age.
+
+### Added
+- Device detail page: a dependency-free SVG line chart of hourly average temperature over the last 7 days, from `GET /telemetry/:id/history`. Bumped `device.js?v=5`, `app.css?v=4`.
+
 ## [1.4.2] - 2026-07-01
 
 ### Added

@@ -22,7 +22,29 @@ async function loadDevices() {
   }
   devices = data
   renderDevices()
-  devices.forEach(fetchStatus)
+}
+
+// Online if telemetry was seen within 90s; PC state from the latest pc_on.
+function badgeInfo(d) {
+  const online = d.last_seen_at && (Date.now() - new Date(d.last_seen_at).getTime()) / 1000 < 90
+  if (!online) return { cls: 'badge-offline', text: 'Offline' }
+  const on = d.pc_on === 1
+  return { cls: on ? 'badge-on' : 'badge-off', text: on ? 'PC On' : 'PC Off' }
+}
+
+// Refresh statuses with a single /devices call; update badges in place so an
+// in-progress inline rename isn't clobbered by a full re-render.
+async function refreshStatuses() {
+  const { data, error } = await api.devices()
+  if (error || !data) return
+  devices = data
+  for (const d of devices) {
+    const badge = document.getElementById(`badge-${d.id}`)
+    if (!badge) continue
+    const b = badgeInfo(d)
+    badge.className = `badge ${b.cls}`
+    badge.textContent = b.text
+  }
 }
 
 function renderDevices() {
@@ -40,11 +62,12 @@ function renderDevices() {
 
 function deviceCard(d) {
   const nameParam = encodeURIComponent(d.name)
+  const b = badgeInfo(d)
   return `
     <div class="device-card" data-id="${esc(d.id)}">
       <div class="device-card-header">
         <span class="device-name" id="name-${esc(d.id)}">${esc(d.name)}</span>
-        <span class="badge badge-offline" id="badge-${esc(d.id)}">—</span>
+        <span class="badge ${b.cls}" id="badge-${esc(d.id)}">${b.text}</span>
       </div>
       <div class="device-controls">
         <button class="btn btn-success btn-sm" data-action="cmd" data-id="${esc(d.id)}" data-cmd="power_on">Power On</button>
@@ -62,22 +85,6 @@ function deviceCard(d) {
     </div>`
 }
 
-async function fetchStatus(device) {
-  const { data } = await api.telemetry(device.id)
-  if (!data || data.length === 0) return
-  const latest = data[0]
-  const badge = document.getElementById(`badge-${device.id}`)
-  if (!badge) return
-  const age = (Date.now() - new Date(latest.recorded_at).getTime()) / 1000
-  if (age < 90) {
-    const on = latest.pc_on === 1
-    badge.className = `badge ${on ? 'badge-on' : 'badge-off'}`
-    badge.textContent = on ? 'PC On' : 'PC Off'
-  } else {
-    badge.className = 'badge badge-offline'
-    badge.textContent = 'Offline'
-  }
-}
 
 async function sendCmd(deviceId, type) {
   const labels = { power_on: 'Power On', power_off: 'Power Off', power_off_force: 'Force Off', reset: 'Reset' }
@@ -227,6 +234,6 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 })
 
 // Auto-refresh device statuses every 30 seconds
-setInterval(() => devices.forEach(fetchStatus), 30000)
+setInterval(refreshStatuses, 30000)
 
 loadDevices()

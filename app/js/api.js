@@ -43,6 +43,8 @@ const api = {
   resendVerify:   ()                             => apiReq('POST',   '/auth/resend-verify'),
   devices:        ()                             => apiReq('GET',    '/devices'),
   getDevice:      (id)                           => apiReq('GET',    `/devices/${id}`),
+  deviceStatus:   (id)                           => apiReq('GET',    `/devices/${id}/status`),
+  history:        (id, days = 7)                 => apiReq('GET',    `/telemetry/${id}/history?days=${days}`),
   addDevice:      (name)                         => apiReq('POST',   '/devices',             { name }),
   renameDevice:   (id, name)                     => apiReq('PATCH',  `/devices/${id}`,       { name }),
   deleteDevice:   (id)                           => apiReq('DELETE', `/devices/${id}`),
