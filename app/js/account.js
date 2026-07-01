@@ -35,6 +35,28 @@ document.getElementById('resend-verify-btn').addEventListener('click', async (e)
   toast('Verification email sent — check your inbox')
 })
 
+// Change email
+document.getElementById('change-email-btn').addEventListener('click', async (e) => {
+  const btn   = e.currentTarget
+  const errEl = document.getElementById('email-error')
+  const okEl  = document.getElementById('email-success')
+  const email = document.getElementById('new-email')
+  const pw    = document.getElementById('email-pw')
+  errEl.classList.remove('show'); okEl.classList.remove('show')
+
+  if (!email.value.trim() || !pw.value) { errEl.textContent = 'Enter a new email and your current password.'; errEl.classList.add('show'); return }
+
+  btn.disabled = true; btn.textContent = 'Saving…'
+  const { error } = await api.changeEmail(email.value.trim(), pw.value)
+  btn.disabled = false; btn.textContent = 'Update email'
+
+  if (error) { errEl.textContent = error; errEl.classList.add('show'); return }
+  pw.value = ''
+  okEl.textContent = 'Email updated — check your new inbox to verify it.'
+  okEl.classList.add('show')
+  document.getElementById('account-email').textContent = email.value.trim()
+})
+
 // Change password
 document.getElementById('change-pw-btn').addEventListener('click', async (e) => {
   const btn     = e.currentTarget

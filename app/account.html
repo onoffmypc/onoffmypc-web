@@ -44,6 +44,24 @@
     </div>
   </div>
 
+  <!-- Change email -->
+  <div class="settings-section">
+    <h2 class="settings-heading">Change email</h2>
+    <div class="settings-card">
+      <div id="email-error" class="error-msg"></div>
+      <div id="email-success" class="success-msg"></div>
+      <div class="field">
+        <label for="new-email">New email</label>
+        <input type="email" id="new-email" autocomplete="email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label for="email-pw">Current password</label>
+        <input type="password" id="email-pw" autocomplete="current-password" />
+      </div>
+      <button class="btn btn-primary btn-sm" id="change-email-btn">Update email</button>
+    </div>
+  </div>
+
   <!-- Security -->
   <div class="settings-section">
     <h2 class="settings-heading">Security</h2>
@@ -106,7 +124,7 @@
 
 <div class="toast-wrap" id="toast-wrap"></div>
 
-<script src="/js/api.js?v=6"></script>
-<script src="/js/account.js?v=5"></script>
+<script src="/js/api.js?v=7"></script>
+<script src="/js/account.js?v=6"></script>
 </body>
 </html>

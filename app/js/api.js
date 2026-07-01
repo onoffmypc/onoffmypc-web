@@ -42,6 +42,7 @@ const api = {
   verifyEmail:    (token)                        => apiReq('GET',    `/auth/verify-email?token=${encodeURIComponent(token)}`),
   resendVerify:   ()                             => apiReq('POST',   '/auth/resend-verify'),
   changePassword: (current_password, new_password) => apiReq('POST', '/auth/change-password', { current_password, new_password }),
+  changeEmail:    (new_email, password)          => apiReq('POST', '/auth/change-email', { new_email, password }),
   devices:        ()                             => apiReq('GET',    '/devices'),
   getDevice:      (id)                           => apiReq('GET',    `/devices/${id}`),
   deviceStatus:   (id)                           => apiReq('GET',    `/devices/${id}/status`),
