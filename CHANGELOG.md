@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-07-01
+
+### Added
+- Device page: schedule a power command for a future time (command picker + datetime), with a list of pending schedules and a cancel action. Uses the new `POST/GET/DELETE /commands/:id/schedule`. Bumped `api.js?v=8`, `device.js?v=6`, `app.css?v=5`.
+
+## [1.6.0] - 2026-07-01
+
+### Added
+- Account page: change email and change password forms (`POST /auth/change-email`, `POST /auth/change-password`). `api.js?v=7`, `account.js?v=6`.
+
 ## [1.5.0] - 2026-07-01
 
 ### Changed

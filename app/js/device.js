@@ -70,6 +70,19 @@ async function load() {
   renderTelemetryTable(telRes.data || [])
   renderCommandsTable(cmdRes.data || [])
   renderChart(histRes.data || [])
+  loadSchedules()
+}
+
+async function loadSchedules() {
+  const { data } = await api.schedules(deviceId)
+  const el = document.getElementById('schedules-list')
+  const rows = data || []
+  if (rows.length === 0) { el.innerHTML = '<p class="text-muted">No scheduled commands.</p>'; return }
+  el.innerHTML = rows.map(s => `
+    <div class="schedule-row">
+      <span>${cmdLabel(s.type)} — ${fmtTime(s.run_at)}</span>
+      <button class="ghost-btn" data-action="cancel-sched" data-id="${s.id}">Cancel</button>
+    </div>`).join('')
 }
 
 function renderStats(latest, status) {
@@ -172,6 +185,39 @@ document.getElementById('cmd-power-on').addEventListener('click',        () => s
 document.getElementById('cmd-power-off').addEventListener('click',       () => sendCmd('power_off'))
 document.getElementById('cmd-power-off-force').addEventListener('click', () => sendCmd('power_off_force'))
 document.getElementById('cmd-reset').addEventListener('click',           () => sendCmd('reset'))
+
+// Schedule a command
+document.getElementById('sched-btn').addEventListener('click', async (e) => {
+  const btn   = e.currentTarget
+  const type  = document.getElementById('sched-type').value
+  const atVal = document.getElementById('sched-at').value
+  const errEl = document.getElementById('sched-error')
+  errEl.classList.remove('show')
+
+  if (!atVal) { errEl.textContent = 'Pick a date and time.'; errEl.classList.add('show'); return }
+  const when = new Date(atVal) // datetime-local is interpreted in local time
+  if (isNaN(when.getTime()) || when.getTime() <= Date.now()) {
+    errEl.textContent = 'Choose a time in the future.'; errEl.classList.add('show'); return
+  }
+
+  btn.disabled = true
+  const { error } = await api.schedule(deviceId, type, when.toISOString())
+  btn.disabled = false
+  if (error) { errEl.textContent = error; errEl.classList.add('show'); return }
+  document.getElementById('sched-at').value = ''
+  toast('Command scheduled')
+  loadSchedules()
+})
+
+// Cancel a scheduled command (event delegation, CSP-safe)
+document.getElementById('schedules-list').addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-action="cancel-sched"]')
+  if (!btn) return
+  const { error } = await api.cancelSchedule(deviceId, btn.dataset.id)
+  if (error) { toast(error, 'error'); return }
+  toast('Schedule cancelled')
+  loadSchedules()
+})
 
 document.getElementById('logout-btn').addEventListener('click', async () => {
   await api.logout()

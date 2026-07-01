@@ -52,5 +52,8 @@ const api = {
   deleteDevice:   (id)                           => apiReq('DELETE', `/devices/${id}`),
   sendCommand:    (deviceId, type)               => apiReq('POST',   `/commands/${deviceId}`, { type }),
   commands:       (deviceId)                     => apiReq('GET',    `/commands/${deviceId}`),
+  schedule:       (deviceId, type, run_at)       => apiReq('POST',   `/commands/${deviceId}/schedule`, { type, run_at }),
+  schedules:      (deviceId)                     => apiReq('GET',    `/commands/${deviceId}/schedule`),
+  cancelSchedule: (deviceId, id)                 => apiReq('DELETE', `/commands/${deviceId}/schedule/${id}`),
   telemetry:      (deviceId)                     => apiReq('GET',    `/telemetry/${deviceId}`),
 }
