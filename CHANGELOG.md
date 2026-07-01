@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-07-01
+
+### Added
+- Show/hide (eye) toggle on the admin Create User password field, matching the app's pattern. Bumped `admin.css` to `?v=4` and versioned `dashboard.js`.
+
 ## [1.4.1] - 2026-07-01
 
 ### Fixed

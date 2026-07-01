@@ -167,3 +167,13 @@ tbody tr:hover td { background: rgba(255,255,255,0.02); }
 .modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
 .modal p  { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.5; }
 .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
+
+/* ── Password show/hide ── */
+.pass-wrap { position: relative; }
+.pass-wrap input { padding-right: 2.75rem; width: 100%; box-sizing: border-box; }
+.pass-eye {
+  position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: var(--muted);
+  padding: .25rem; display: flex; align-items: center; line-height: 0;
+}
+.pass-eye:hover { color: var(--text); }
