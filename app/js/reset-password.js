@@ -49,5 +49,5 @@ form.addEventListener('submit', async (e) => {
   form.style.display = 'none'
   successEl.textContent = 'Password updated. Redirecting to sign in…'
   successEl.classList.add('show')
-  setTimeout(() => location.replace('/login.html'), 2000)
+  setTimeout(() => location.replace('/login.html?reset=1'), 2000)
 })

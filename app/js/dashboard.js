@@ -32,6 +32,16 @@ function badgeInfo(d) {
   return { cls: on ? 'badge-on' : 'badge-off', text: on ? 'PC On' : 'PC Off' }
 }
 
+// Human-readable "last seen" for the card, from last_seen_at.
+function lastSeenText(d) {
+  if (!d.last_seen_at) return 'Never connected'
+  const diff = Math.floor((Date.now() - new Date(d.last_seen_at).getTime()) / 1000)
+  if (diff < 60)    return 'Last seen just now'
+  if (diff < 3600)  return `Last seen ${Math.floor(diff / 60)}m ago`
+  if (diff < 86400) return `Last seen ${Math.floor(diff / 3600)}h ago`
+  return `Last seen ${Math.floor(diff / 86400)}d ago`
+}
+
 // Refresh statuses with a single /devices call; update badges in place so an
 // in-progress inline rename isn't clobbered by a full re-render.
 async function refreshStatuses() {
@@ -44,6 +54,8 @@ async function refreshStatuses() {
     const b = badgeInfo(d)
     badge.className = `badge ${b.cls}`
     badge.textContent = b.text
+    const meta = document.getElementById(`meta-${d.id}`)
+    if (meta) meta.textContent = lastSeenText(d)
   }
 }
 
@@ -52,7 +64,9 @@ function renderDevices() {
   if (devices.length === 0) {
     el.innerHTML = `
       <div class="empty-state">
-        <p>No devices yet.</p>
+        <div class="empty-icon">🖥️</div>
+        <h2>No devices yet</h2>
+        <p>Add your first ESP32 to start powering your PC on and off from anywhere.</p>
         <button class="btn btn-primary" data-action="open-add">Add your first device</button>
       </div>`
     return
@@ -69,6 +83,7 @@ function deviceCard(d) {
         <span class="device-name" id="name-${esc(d.id)}">${esc(d.name)}</span>
         <span class="badge ${b.cls}" id="badge-${esc(d.id)}">${b.text}</span>
       </div>
+      <div class="device-meta" id="meta-${esc(d.id)}">${lastSeenText(d)}</div>
       <div class="device-controls">
         <button class="btn btn-success btn-sm" data-action="cmd" data-id="${esc(d.id)}" data-cmd="power_on">Power On</button>
         <button class="btn btn-danger btn-sm"  data-action="cmd" data-id="${esc(d.id)}" data-cmd="power_off">Power Off</button>

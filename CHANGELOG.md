@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-07-01
+
+### Added
+- **Confirm-password field** on the register page, with a client-side match check before the account is created (`register.html`, `auth.js?v=5`).
+- **Sign-in confirmation banners** — the login page now shows a success message when arriving after registration (`?registered=1`), a password reset (`?reset=1`), or account deletion (`?deleted=1`), wiring up the previously-unused `#success` element. `reset-password.js?v=5` redirects with `?reset=1`; a failed auto-login after registration redirects with `?registered=1`.
+- **"Last seen" line** on each dashboard device card (e.g. "Last seen 5m ago"), updated in place on the 30s refresh (`dashboard.js?v=7`).
+- **Loading spinner** in place of plain "Loading…" text on the dashboard and device pages.
+- **Canonical link tags** on all marketing pages; **active-state styling** for the current page's nav link (`style.css?v=3`).
+
+### Changed
+- Dashboard empty state now has an icon, heading, and clearer call to action.
+- `setup.html` step 2 links directly to `/dashboard.html` instead of the app root (which redirects).
+
 ## [1.9.0] - 2026-07-01
 
 ### Added

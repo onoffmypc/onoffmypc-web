@@ -84,6 +84,11 @@ nav {
   color: var(--text);
 }
 
+.nav-links a.active {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* ── Buttons ── */
 .btn-primary {
   background: var(--accent);
