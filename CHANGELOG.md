@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-07-02
+
+### Added
+- **Firmware version** shown on the device detail page (a small pill next to the online/offline badge), rendered from the `firmware_version` field when the API provides it (`device.js?v=8`, `app.css?v=9`).
+- **Auto-refresh indicator** on the device page — a live "Refreshed X ago" counter next to the header so the silent 30s poll is visible.
+- **Offline banner** on the dashboard and device pages — a sticky notice appears when the API is unreachable and clears on the next successful request, instead of failing silently (`api.js?v=9`).
+
 ## [1.10.0] - 2026-07-01
 
 ### Added

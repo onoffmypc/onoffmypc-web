@@ -8,6 +8,13 @@ const API_BASE = 'https://api.onoffmypc.com'
 // the clean form, so location.pathname is usually extensionless.
 const AUTH_PAGES = /\/(login|register|forgot-password|reset-password|verify-email)(\.html)?$/
 
+// Toggle the offline banner (present on the polling pages) when the API is
+// unreachable. Reaching the server at all — even a 4xx/5xx — counts as online.
+function setOffline(on) {
+  const el = document.getElementById('offline-banner')
+  if (el) el.classList.toggle('show', on)
+}
+
 async function apiReq(method, path, body) {
   try {
     const res = await fetch(API_BASE + path, {
@@ -16,6 +23,7 @@ async function apiReq(method, path, body) {
       credentials: 'include',
       body: body !== undefined ? JSON.stringify(body) : undefined,
     })
+    setOffline(false)
     // No/expired session on a protected page → send them to sign in.
     if (res.status === 401 && !AUTH_PAGES.test(location.pathname)) {
       location.replace('/login.html')
@@ -25,6 +33,7 @@ async function apiReq(method, path, body) {
     if (!res.ok) return { error: data.error || 'request failed' }
     return { data }
   } catch {
+    setOffline(true)
     return { error: 'network error' }
   }
 }

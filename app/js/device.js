@@ -16,7 +16,22 @@ api.getDevice(deviceId).then(({ data, error }) => {
   if (error || !data) { location.replace('/dashboard.html'); return }
   document.title = `${data.name} — OnOffMyPC`
   document.getElementById('device-title').textContent = data.name
+  if (data.firmware_version) {
+    const fw = document.getElementById('device-firmware')
+    fw.textContent = `Firmware ${data.firmware_version}`
+    fw.classList.remove('is-hidden')
+  }
 })
+
+// Live "refreshed X ago" indicator for the 30s auto-refresh.
+let lastRefresh = 0
+function tickRefresh() {
+  const el = document.getElementById('refresh-indicator')
+  if (!el || !lastRefresh) return
+  const s = Math.floor((Date.now() - lastRefresh) / 1000)
+  el.textContent = s < 2 ? 'Refreshed just now' : `Refreshed ${s}s ago`
+}
+setInterval(tickRefresh, 1000)
 
 function toast(msg, type = 'success') {
   const el = document.createElement('div')
@@ -65,6 +80,9 @@ async function load() {
 
   document.getElementById('loading').style.display = 'none'
   document.getElementById('content').style.display = 'block'
+
+  lastRefresh = Date.now()
+  tickRefresh()
 
   renderStats((telRes.data || [])[0] || null, statusRes.data || null)
   renderTelemetryTable(telRes.data || [])
