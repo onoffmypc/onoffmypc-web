@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-07-02
+
+### Added
+- SEO/discoverability: `sitemap.xml`, `robots.txt`, and JSON-LD `SoftwareApplication` structured data on the marketing homepage (completes the favicon/OG/canonical work).
+- Accessibility: toast notifications now announce to assistive tech (`role="status" aria-live="polite"` on the toast container across app pages).
+
 ## [1.14.0] - 2026-07-02
 
 ### Changed
