@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-07-02
+
+### Added
+- **Contact form backend** — a Cloudflare Pages Function at `/api/contact` (`functions/api/contact.js`) receives the form and emails it via Resend (the project's existing email provider), with a honeypot field, input validation, and length caps. The form now posts to it over `fetch` and shows an inline result. Bumped `contact.js?v=2`, `style.css?v=5`.
+  - Pages project env needed: `RESEND_API_KEY` (secret); optional `CONTACT_TO` (default `support@onoffmypc.com`) and `CONTACT_FROM`.
+- **CI/CD** — a GitHub Actions workflow (`.github/workflows/deploy.yml`) deploys the marketing and app Pages projects on every push to `main`. Requires `CLOUDFLARE_API_TOKEN` (Pages: Edit) and `CLOUDFLARE_ACCOUNT_ID` repo secrets.
+
 ## [1.12.0] - 2026-07-02
 
 ### Added

@@ -1,0 +1,40 @@
+name: Deploy
+
+# Deploys the two public Cloudflare Pages projects on every push to main:
+#   marketing  ->  onoffmypc-web        (repo root)
+#   app        ->  onoffmypc-dashboard  (app/)
+#
+# Requires two repository secrets:
+#   CLOUDFLARE_API_TOKEN   — token with "Cloudflare Pages: Edit" permission
+#   CLOUDFLARE_ACCOUNT_ID  — the account ID
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy marketing site
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name onoffmypc-web --branch main
+
+      - name: Deploy app
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy app --project-name onoffmypc-dashboard --branch main

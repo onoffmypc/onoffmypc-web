@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="Contact — OnOffMyPC" />
   <meta name="twitter:description" content="Get help with OnOffMyPC — email support, report an issue on GitHub, or send us a message." />
   <meta name="twitter:image" content="https://onoffmypc.com/og-image.png" />
-  <link rel="stylesheet" href="/css/style.css?v=4" />
+  <link rel="stylesheet" href="/css/style.css?v=5" />
   <script src="/js/theme.js?v=1"></script>
 </head>
 <body>
@@ -56,21 +56,21 @@
     </div>
 
     <h2>Send a message</h2>
-    <!-- Wire this up by replacing YOUR_FORM_ID with a Formspree form ID
-         (https://formspree.io) or another static-form endpoint. -->
-    <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <form id="contact-form" class="contact-form" action="/api/contact" method="POST">
       <div class="field">
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" autocomplete="name" required />
+        <input type="text" id="name" name="name" autocomplete="name" maxlength="100" required />
       </div>
       <div class="field">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+        <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" maxlength="200" required />
       </div>
       <div class="field">
         <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
+        <textarea id="message" name="message" rows="5" maxlength="5000" required></textarea>
       </div>
+      <!-- Honeypot: hidden from people, tempting to bots. Leave empty. -->
+      <input type="text" name="company" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true" />
       <button type="submit" class="btn-primary btn-large">Send message</button>
     </form>
     <p id="contact-status" class="contact-status" role="status"></p>
@@ -91,6 +91,6 @@
   </div>
 </footer>
 
-<script src="/js/contact.js?v=1"></script>
+<script src="/js/contact.js?v=2"></script>
 </body>
 </html>

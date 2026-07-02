@@ -1,7 +1,5 @@
-// Contact form: submit over fetch so the visitor stays on the page, with an
-// inline status message. Works with Formspree (or any endpoint that accepts a
-// POST and returns JSON). Until a real form ID is configured, fall back to the
-// support email so the form never silently fails.
+// Contact form: submit over fetch to the /api/contact Pages Function so the
+// visitor stays on the page, with an inline status message.
 (function () {
   var form = document.getElementById('contact-form')
   var statusEl = document.getElementById('contact-status')
@@ -16,28 +14,29 @@
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault()
-
-    // Not wired to a real endpoint yet — point the visitor at email instead.
-    if (form.action.indexOf('YOUR_FORM_ID') !== -1) {
-      setStatus('The message form isn’t set up yet — please email ' + SUPPORT_EMAIL + ' directly.', 'error')
-      return
-    }
-
     var btn = form.querySelector('button[type=submit]')
     btn.disabled = true
     setStatus('Sending…', '')
 
+    var payload = {
+      name: form.name.value,
+      email: form.email.value,
+      message: form.message.value,
+      company: form.company.value, // honeypot
+    }
+
     try {
       var res = await fetch(form.action, {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       })
-      if (res.ok) {
+      var data = await res.json().catch(function () { return {} })
+      if (res.ok && data.ok) {
         form.reset()
         setStatus('Thanks — your message has been sent. We’ll be in touch.', 'success')
       } else {
-        setStatus('Something went wrong. Please email ' + SUPPORT_EMAIL + ' instead.', 'error')
+        setStatus(data.error || ('Something went wrong. Please email ' + SUPPORT_EMAIL + ' instead.'), 'error')
       }
     } catch (err) {
       setStatus('Network error. Please email ' + SUPPORT_EMAIL + ' instead.', 'error')

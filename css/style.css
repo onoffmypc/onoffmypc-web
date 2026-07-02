@@ -382,6 +382,7 @@ main {
 .contact-form textarea:focus { outline: none; border-color: var(--accent); }
 .contact-form textarea { resize: vertical; }
 .contact-form button { margin-top: 0.5rem; border: none; cursor: pointer; }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .contact-status { font-size: 0.875rem; margin-top: 1rem; }
 .contact-status.success { color: var(--green, #16a34a); }
 .contact-status.error { color: #ef4444; }
