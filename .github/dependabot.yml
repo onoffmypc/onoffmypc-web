@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # The web repo has no package manifest (plain HTML/CSS/JS); only the
+  # GitHub Actions workflows have versioned dependencies to keep current.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
