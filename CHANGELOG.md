@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-07-02
+
+### Changed
+- Contact form now submits to the backend API (`POST https://api.onoffmypc.com/contact`), which sends the message via Cloudflare Email Routing. Replaces the Resend-based Pages Function (removed `functions/api/contact.js`) — Pages Functions can't use the Email Routing `send_email` binding, so the send lives in the API Worker.
+
 ## [1.13.0] - 2026-07-02
 
 ### Added
