@@ -318,6 +318,74 @@ main {
   line-height: 1.7;
 }
 
+/* ── Changelog page ── */
+.changelog .release { margin-bottom: 2.5rem; }
+.changelog .release h2 { margin-top: 0; }
+.changelog ul { list-style: none; padding-left: 0; }
+.changelog ul li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.changelog ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.changelog ul li strong { color: var(--text); }
+
+/* ── Contact page ── */
+.contact-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+.contact-card h2 { font-size: 1rem; font-weight: 700; margin: 0 0 0.4rem; color: var(--text); }
+.contact-card p { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.75rem; }
+.contact-link { font-size: 0.9rem; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+
+.contact-form { max-width: 520px; }
+.contact-form .field { margin-bottom: 1rem; }
+.contact-form label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: var(--font);
+  padding: 0.6rem 0.75rem;
+}
+.contact-form input:focus,
+.contact-form textarea:focus { outline: none; border-color: var(--accent); }
+.contact-form textarea { resize: vertical; }
+.contact-form button { margin-top: 0.5rem; border: none; cursor: pointer; }
+.contact-status { font-size: 0.875rem; margin-top: 1rem; }
+.contact-status.success { color: var(--green, #16a34a); }
+.contact-status.error { color: #ef4444; }
+
 /* ── Footer ── */
 footer {
   border-top: 1px solid var(--border);

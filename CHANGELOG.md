@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-07-02
+
+### Added
+- **Contact & support page** (`contact.html`) — support email, a "report a bug" link to GitHub issues, and a message form. The form submits over `fetch` (`contact.js`) to a configurable endpoint (Formspree placeholder) and falls back to directing the visitor to email until a form ID is set.
+- **Changelog page** (`changelog.html`) — a curated, plain-language "What's new" list for visitors.
+- Both pages linked from the marketing footer across the site. Bumped `style.css?v=4`.
+
 ## [1.11.0] - 2026-07-02
 
 ### Added
